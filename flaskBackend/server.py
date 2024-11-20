@@ -46,6 +46,11 @@ def upload_image():
     image_filename = f'{uuid.uuid4().hex}.jpg'
     image_path = os.path.join(UPLOAD_FOLDER, image_filename)
     
+    for filename in os.listdir(UPLOAD_FOLDER):
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+            
     # Save image to disk
     with open(image_path, 'wb') as f:
         f.write(image_bytes)

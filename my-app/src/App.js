@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const App = () => {
   const [photos, setPhotos] = useState([]);
-  const [backendStatus, setBackendStatus] = useState(null); // To store backend status
-  const [isRecording, setIsRecording] = useState(false); // To track recording status
+  const [backendStatus, setBackendStatus] = useState(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isCameraStarted, setIsCameraStarted] = useState(false); // Track if the camera is started
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -29,42 +30,32 @@ const App = () => {
       const response = await fetch('https://10.12.141.7:5000/uploads');
       const data = await response.json();
       if (data.images) {
-        // Adjust image URLs to be valid and accessible from the frontend
         const updatedImages = data.images.map(imageUrl => `https://10.12.141.7:5000${imageUrl}`);
-        setPhotos(updatedImages); // Set the photos state with the images
+        setPhotos(updatedImages);
       }
     } catch (error) {
       console.error('Error fetching uploaded images:', error);
     }
   };
 
-  useEffect(() => {
-    checkBackend();  // Check backend when the component is mounted
-    fetchUploadedImages(); // Fetch the list of uploaded images
+  // Function to start the camera
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoRef.current.srcObject = stream;
+      setIsCameraStarted(true); // Set to true once the camera starts
+    } catch (error) {
+      console.error('Error accessing camera:', error);
+      alert('Camera permission denied or unavailable.');
+    }
+  };
 
-    // Get the camera feed
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        videoRef.current.srcObject = stream;
-      })
-      .catch(error => console.log(error));
-
-    return () => {
-      if (videoRef.current) {
-        // Clean up the stream if needed
-        videoRef.current.srcObject?.getTracks().forEach(track => track.stop());
-      }
-    };
-  }, []);
-
-  // Function to handle capturing and uploading image
+  // Capture photo logic
   const capturePhoto = async () => {
     if (videoRef.current && canvasRef.current) {
       const context = canvasRef.current.getContext('2d');
       context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
       const imageData = canvasRef.current.toDataURL('image/jpeg');
-      
-      // Upload the photo to your server
       uploadPhoto(imageData);
     }
   };
@@ -82,20 +73,22 @@ const App = () => {
 
       const data = await response.json();
       if (data.success) {
-        // Update the list of photos by fetching the uploaded images again
-        fetchUploadedImages();
+        fetchUploadedImages(); // Fetch updated photos
       }
     } catch (error) {
       console.error('Error uploading photo:', error);
     }
   };
 
-  // Start/Stop recording when the button is clicked
+  // Toggle recording
   const toggleRecording = () => {
     setIsRecording(prevState => !prevState); // Toggle recording state
   };
 
   useEffect(() => {
+    checkBackend(); // Check backend on mount
+    fetchUploadedImages(); // Fetch uploaded images on mount
+
     // Only start capturing when recording is enabled
     const interval = isRecording ? setInterval(capturePhoto, 2000) : null;
 
@@ -113,14 +106,20 @@ const App = () => {
         <p>{backendStatus ? backendStatus : 'Checking backend...'}</p>
       </div>
 
-      <video ref={videoRef} autoPlay width="320" height="240" />
+      {/* Button to start camera */}
+      {!isCameraStarted && (
+        <button onClick={startCamera}>Start Camera</button>
+      )}
+
+      {/* Video element for the camera feed */}
+      <video ref={videoRef} autoPlay width="320" height="240" style={{ display: isCameraStarted ? 'block' : 'none' }} />
       <canvas ref={canvasRef} width="320" height="240" style={{ display: 'none' }} />
 
       {/* Start/Stop Recording Button */}
       <button onClick={toggleRecording}>
         {isRecording ? 'Stop Recording' : 'Start Recording'}
       </button>
-      
+
       <div>
         <h2>Captured Photos</h2>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
