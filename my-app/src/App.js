@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 const App = () => {
   const [photos, setPhotos] = useState([]);
   const [backendStatus, setBackendStatus] = useState(null); // To store backend status
+  const [isRecording, setIsRecording] = useState(false); // To track recording status
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -28,7 +29,9 @@ const App = () => {
       const response = await fetch('https://10.12.141.7:5000/uploads');
       const data = await response.json();
       if (data.images) {
-        setPhotos(data.images); // Set the photos state with the images
+        // Adjust image URLs to be valid and accessible from the frontend
+        const updatedImages = data.images.map(imageUrl => `https://10.12.141.7:5000${imageUrl}`);
+        setPhotos(updatedImages); // Set the photos state with the images
       }
     } catch (error) {
       console.error('Error fetching uploaded images:', error);
@@ -46,24 +49,29 @@ const App = () => {
       })
       .catch(error => console.log(error));
 
-    // Take photo every 2 seconds
-    const interval = setInterval(() => {
-      if (videoRef.current && canvasRef.current) {
-        const context = canvasRef.current.getContext('2d');
-        context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
-        const imageData = canvasRef.current.toDataURL('image/jpeg');
-
-        // Upload the photo to your server
-        uploadPhoto(imageData);
+    return () => {
+      if (videoRef.current) {
+        // Clean up the stream if needed
+        videoRef.current.srcObject?.getTracks().forEach(track => track.stop());
       }
-    }, 2000);
-
-    return () => clearInterval(interval);
+    };
   }, []);
 
+  // Function to handle capturing and uploading image
+  const capturePhoto = async () => {
+    if (videoRef.current && canvasRef.current) {
+      const context = canvasRef.current.getContext('2d');
+      context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
+      const imageData = canvasRef.current.toDataURL('image/jpeg');
+      
+      // Upload the photo to your server
+      uploadPhoto(imageData);
+    }
+  };
+
+  // Upload photo to the backend
   const uploadPhoto = async (imageData) => {
     try {
-      // Send the photo to the backend
       const response = await fetch('https://10.12.141.7:5000/upload', {
         method: 'POST',
         headers: {
@@ -82,9 +90,22 @@ const App = () => {
     }
   };
 
+  // Start/Stop recording when the button is clicked
+  const toggleRecording = () => {
+    setIsRecording(prevState => !prevState); // Toggle recording state
+  };
+
+  useEffect(() => {
+    // Only start capturing when recording is enabled
+    const interval = isRecording ? setInterval(capturePhoto, 2000) : null;
+
+    // Cleanup interval when recording stops
+    return () => clearInterval(interval);
+  }, [isRecording]);
+
   return (
     <div>
-      <h1>Automatic Photo Capture</h1>
+      <h1>Manual Photo Capture</h1>
 
       {/* Display backend status */}
       <div>
@@ -94,12 +115,17 @@ const App = () => {
 
       <video ref={videoRef} autoPlay width="320" height="240" />
       <canvas ref={canvasRef} width="320" height="240" style={{ display: 'none' }} />
+
+      {/* Start/Stop Recording Button */}
+      <button onClick={toggleRecording}>
+        {isRecording ? 'Stop Recording' : 'Start Recording'}
+      </button>
       
       <div>
         <h2>Captured Photos</h2>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {photos.map((photo, index) => (
-            <img key={index} src={`https://10.12.141.7:5000${photo}`} alt={`Captured ${index}`} style={{ width: '100px', height: 'auto', margin: '5px' }} />
+            <img key={index} src={photo} alt={`Captured ${index}`} style={{ width: '100px', height: 'auto', margin: '5px' }} />
           ))}
         </div>
       </div>

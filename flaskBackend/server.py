@@ -13,8 +13,9 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 # Serve uploaded files
-@app.route('/uploads/<filename>')
+@app.route('/uploads/<filename>', methods=['GET'])
 def uploaded_file(filename):
+    # Serve the uploaded file from the uploads folder
     return send_from_directory(UPLOAD_FOLDER, filename)
 
 @app.route('/ping', methods=['GET'])
