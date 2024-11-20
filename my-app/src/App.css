@@ -25,4 +25,20 @@ body{
   font-size: calc(10px + 2vmin);
   color: black;
 }
+#container{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-align: center;
+  font-size: 20px;
+  color: white;
+  
+  margin: auto;
+  width: 50%;
+  height: 500px;
+  background-color: #888;
+  border: 5px solid black;
+}
+
+#videoElement{
+  height: 70%;
+}
 
