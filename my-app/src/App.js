@@ -89,6 +89,16 @@ const App = () => {
     checkBackend(); // Check backend on mount
     fetchUploadedImages(); // Fetch uploaded images on mount
 
+    // Poll for updates every 5 seconds
+    const interval = setInterval(() => {
+      fetchUploadedImages();
+    }, 5000);
+
+    // Cleanup interval when the component is unmounted
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
     // Only start capturing when recording is enabled
     const interval = isRecording ? setInterval(capturePhoto, 2000) : null;
 
