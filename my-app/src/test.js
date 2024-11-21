@@ -8,7 +8,7 @@ const ImageUpload = () => {
   const [coordinates, setCoordinates] = useState([]);
   const imageRef = useRef(null);
 
-  // Fetch the list of folders from the backend
+  // Fetch the list of folders from the backend periodically
   useEffect(() => {
     const fetchFolders = async () => {
       try {
@@ -18,7 +18,15 @@ const ImageUpload = () => {
         console.error('Error fetching folders:', error);
       }
     };
+
+    // Initial folder fetch
     fetchFolders();
+
+    // Set up a periodic update every 5 seconds
+    const intervalId = setInterval(fetchFolders, 5000); // Update every 5 seconds
+
+    // Clear the interval on component unmount to avoid memory leaks
+    return () => clearInterval(intervalId);
   }, []);
 
   // Function to fetch images from the selected folder
