@@ -15,10 +15,9 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <App />
+    <Webtest />
+    <ImageUpload />
+    <I2 />
+    <WebBottom />
   </React.StrictMode>
 );
-
-//<Webtest />
-//<ImageUpload />
-//<I2 />
-//<WebBottom />
