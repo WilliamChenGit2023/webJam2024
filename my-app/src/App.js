@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const App = () => {
-  const [photos, setPhotos] = useState([]);  // To store photos
-  const [folders, setFolders] = useState([]);  // To store folder names
-  const [selectedFolder, setSelectedFolder] = useState('');  // For storing selected folder
-  const [backendStatus, setBackendStatus] = useState(null); 
-  const [isRecording, setIsRecording] = useState(false);  
-  const [isCameraStarted, setIsCameraStarted] = useState(false); 
-  const [newFolderName, setNewFolderName] = useState(''); 
+  const [photos, setPhotos] = useState([]); // To store photos for display
+  const [folders, setFolders] = useState([]); // To store available folders
+  const [selectedFolder, setSelectedFolder] = useState(''); // Folder for displaying photos
+  const [recordingFolder, setRecordingFolder] = useState(''); // Folder for uploading photos
+  const [backendStatus, setBackendStatus] = useState(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isCameraStarted, setIsCameraStarted] = useState(false);
+  const [newFolderName, setNewFolderName] = useState('');
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -30,10 +31,10 @@ const App = () => {
   // Function to fetch the list of folders
   const fetchFolders = async () => {
     try {
-      const response = await fetch('https://10.12.141.7:5000/get_folders');  // Adjust the backend URL accordingly
+      const response = await fetch('https://10.12.141.7:5000/get_folders');
       const data = await response.json();
       if (data.folders) {
-        setFolders(data.folders); // Set the folders from the backend
+        setFolders(data.folders);
       }
     } catch (error) {
       console.error('Error fetching folders:', error);
@@ -52,25 +53,27 @@ const App = () => {
       });
       const data = await response.json();
       if (data.images) {
-        setPhotos(data.images.map(imageUrl => `https://10.12.141.7:5000${imageUrl}`)); // Construct full URLs for images
+        setPhotos(data.images.map(imageUrl => `https://10.12.141.7:5000${imageUrl}`));
+      } else {
+        setPhotos([]);
       }
     } catch (error) {
       console.error('Error fetching photos from folder:', error);
     }
   };
 
-  // Handle folder selection change
-  const handleFolderChange = (event) => {
+  // Handle folder change for displaying photos
+  const handleDisplayFolderChange = (event) => {
     const folderName = event.target.value;
     setSelectedFolder(folderName);
     if (folderName) {
-      fetchPhotosFromFolder(folderName);  // Fetch images for the selected folder
+      fetchPhotosFromFolder(folderName);
     } else {
-      setPhotos([]);  // Clear photos if no folder is selected
+      setPhotos([]);
     }
   };
 
-  // Function to start the camera
+  // Start camera
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -82,9 +85,9 @@ const App = () => {
     }
   };
 
-  // Capture photo logic
+  // Capture photo and upload it
   const capturePhoto = async () => {
-    if (videoRef.current && canvasRef.current) {
+    if (videoRef.current && canvasRef.current && recordingFolder) {
       const context = canvasRef.current.getContext('2d');
       context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
       const imageData = canvasRef.current.toDataURL('image/jpeg');
@@ -100,12 +103,9 @@ const App = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ image: imageData, folder_name: selectedFolder }),
+        body: JSON.stringify({ image: imageData, folder_name: recordingFolder }),
       });
       const data = await response.json();
-      if (data.success) {
-        fetchPhotosFromFolder(selectedFolder); // Fetch updated photos
-      }
     } catch (error) {
       console.error('Error uploading photo:', error);
     }
@@ -134,7 +134,7 @@ const App = () => {
       if (data.success) {
         alert('Folder created successfully!');
         setNewFolderName('');
-        fetchFolders(); // Refresh folders list
+        fetchFolders();
       } else {
         alert(data.error);
       }
@@ -149,10 +149,19 @@ const App = () => {
     fetchFolders(); // Fetch folder list on mount
   }, []);
 
+  // Polling for recording
   useEffect(() => {
     const interval = isRecording ? setInterval(capturePhoto, 2000) : null;
     return () => clearInterval(interval);
   }, [isRecording]);
+
+  // Polling for displayed photos
+  useEffect(() => {
+    const interval = selectedFolder
+      ? setInterval(() => fetchPhotosFromFolder(selectedFolder), 2000)
+      : null;
+    return () => clearInterval(interval);
+  }, [selectedFolder]);
 
   return (
     <div>
@@ -169,6 +178,16 @@ const App = () => {
 
       <video ref={videoRef} autoPlay width="320" height="240" style={{ display: isCameraStarted ? 'block' : 'none' }} />
       <canvas ref={canvasRef} width="320" height="240" style={{ display: 'none' }} />
+
+      <div>
+        <h2>Recording Folder</h2>
+        <select onChange={(e) => setRecordingFolder(e.target.value)} value={recordingFolder}>
+          <option value="">Select a folder</option>
+          {folders.map((folder, index) => (
+            <option key={index} value={folder}>{folder}</option>
+          ))}
+        </select>
+      </div>
 
       <button onClick={toggleRecording}>
         {isRecording ? 'Stop Recording' : 'Start Recording'}
@@ -187,7 +206,7 @@ const App = () => {
 
       <div>
         <h2>Captured Photos in "{selectedFolder}" Folder</h2>
-        <select onChange={handleFolderChange} value={selectedFolder}>
+        <select onChange={handleDisplayFolderChange} value={selectedFolder}>
           <option value="">Select a folder</option>
           {folders.map((folder, index) => (
             <option key={index} value={folder}>{folder}</option>
@@ -204,4 +223,3 @@ const App = () => {
 };
 
 export default App;
-

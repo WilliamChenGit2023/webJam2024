@@ -35,6 +35,7 @@ def get_images_in_folder():
     folder_name = data.get('folder_name')
 
     if not folder_name:
+        print("hi")
         return jsonify({'error': 'Folder name is required'}), 400
 
     # Construct the folder path
