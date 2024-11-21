@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
-const ImageUpload = () => {
+const I2 = () => {
   const [folders, setFolders] = useState([]); // To store available folders
   const [selectedFolder, setSelectedFolder] = useState(''); // Folder for displaying photos
   const [image, setImage] = useState(null); // To store the fetched image
@@ -46,6 +46,23 @@ const ImageUpload = () => {
     } catch (error) {
       console.error('Error fetching images:', error);
       setImage(null);
+    }
+  };
+
+  // Fetch coordinates JSON based on the selected folder and image
+  const fetchCoordinates = async (folderName, imageFilename) => {
+    try {
+      const response = await axios.get(`https://10.12.141.7:5000/get_coordinates`, {
+        params: { folder_name: folderName, image_filename: imageFilename },
+      });
+      if (response.data.coordinates) {
+        setCoordinates(response.data.coordinates);
+      } else {
+        console.error('No coordinates found for this image');
+        setCoordinates([]); // Clear coordinates if none found
+      }
+    } catch (error) {
+      console.error('Error fetching coordinates:', error);
     }
   };
 
@@ -137,6 +154,13 @@ const ImageUpload = () => {
     }
   };
 
+  useEffect(() => {
+    // Fetch coordinates when image is selected
+    if (image) {
+      fetchCoordinates(selectedFolder, image.split('/').pop());
+    }
+  }, [image, selectedFolder]);
+
   return (
     <div>
       <h1>Select Folder and Image, then Click Two Points</h1>
@@ -186,4 +210,4 @@ const ImageUpload = () => {
   );
 };
 
-export default ImageUpload;
+export default I2;

@@ -6,6 +6,7 @@ import Webtest from './Webtest';
 import App from './App';
 import WebBottom from './WebBottom';
 import ImageUpload from './test';
+import I2 from './test copy';
 
 
 const rootElement = document.getElementById('root');
@@ -15,7 +16,7 @@ root.render(
   <React.StrictMode>
     <App />
     <Webtest />
-    <WebBottom />
     <ImageUpload />
+    <WebBottom />
   </React.StrictMode>
 );
