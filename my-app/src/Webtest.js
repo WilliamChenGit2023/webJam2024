@@ -23,7 +23,7 @@ const Webtest = () => {
       if (data.status === 'success') {
         setBackendStatus(`Connected: ${data.message}, Number: ${data.number}`);
       } else {
-        setBackendStatus('Failed to connect to backend');
+        setBackendStatus('Failed to connect to backend:' + serverAddress);
       }
     } catch (error) {
       setBackendStatus('Error connecting to backend');
