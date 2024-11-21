@@ -22,7 +22,8 @@ def main():
     if n == 4 and sys.argv[3]!="-N":
         raise Exception("Invalid flag.")
     
-    mach_name = Path(img_path).parts[len(Path(img_path).parts)-1]
+    pfold = Path(img_path).parent
+    mach_name = pfold.parts[len(pfold.parts)-1]
     lc_path = f"./mach_coord/{mach_name}.txt"
     if n == 2:
         lx = rx = None
@@ -49,4 +50,6 @@ def main():
 
 
 if __name__=="__main__":
-    sys.exit(main())
+    res=main()
+    print(res)
+    sys.exit(res)
