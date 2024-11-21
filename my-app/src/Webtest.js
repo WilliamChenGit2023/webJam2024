@@ -176,11 +176,9 @@ const Webtest = () => {
         <h2>Backend Status</h2>
         <p>{backendStatus ? backendStatus : 'Checking backend...'}</p>
       </div>
-
       {!isCameraStarted && (
         <button onClick={startCamera}>Start Camera</button>
       )}
-
       <video id = "videoScreen" ref={videoRef} autoPlay width="320" height="240" style={{ display: isCameraStarted ? 'block' : 'none' }} />
       <canvas ref={canvasRef} width="320" height="240" style={{ display: 'none' }} />
 

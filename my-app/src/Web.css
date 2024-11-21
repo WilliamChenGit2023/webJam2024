@@ -9,3 +9,27 @@
 #videoScreen{
     width: 100%
 }
+
+.main-container {
+    padding-top: 100;
+    display: grid;
+    place-content: center;
+    gap: 0.8rem;
+  }
+  
+  .button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white; /* Text color */
+    background-color: grey; /* Button background color */
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    justify-self: center;
+    align-self: center;
+    transition: background-color 0.3s, transform 0.2s; /* Hover effect */
+  }
