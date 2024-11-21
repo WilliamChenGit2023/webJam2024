@@ -42,3 +42,10 @@ body{
   height: 70%;
 }
 
+#ourCredits{
+  text-align: center;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  background-color: #888;
+  color:aliceblue;
+}
+

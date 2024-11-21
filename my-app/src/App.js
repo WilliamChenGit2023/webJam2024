@@ -16,6 +16,10 @@ function App() {
       <PlaceHolder></PlaceHolder>
       <Record></Record>
     </div>
+    <br></br>
+    <br></br>
+    <br></br>
+    <Credits></Credits>
     </div>
   );
 }
@@ -70,5 +74,22 @@ function MyVideoProgram(){
     console.log("The media is not supported")
   }
 }
-
+function Credits(){
+  return(
+    <div id = "ourCredits">
+      <br></br>
+      <p>
+        This Website is Created for the Purpose of Webjam 2024
+        and For the Purpose of Traking Washing Machines
+      </p>
+      <p>
+        Created by Will Bao, Cody Chen, William Chen, Jianan Zhu
+      </p>
+      <p>
+        Programmed in React using Javascript and Python
+      </p>
+      <br></br>
+    </div>
+  )
+}
 export default App;
