@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import './Web.css'
 
 const Webtest = () => {
   const [photos, setPhotos] = useState([]); // To store photos for display

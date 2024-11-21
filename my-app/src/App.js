@@ -13,42 +13,13 @@ function App() {
       </motion.div>
     </div>
     <div>
-      <PlaceHolder></PlaceHolder>
       <Record></Record>
     </div>
     <br></br>
-    <br></br>
-    <br></br>
-    <Credits></Credits>
     </div>
   );
 }
-function PlaceHolder(){
-  return(
-  <div id = "image_placeholder">
-  <form action = "/action_page.php" enctype="multipart/form-data">
-    <lable for = "myfile">Please Film the Washing Machine (please do not delete)</lable>
-    <input
-      type = "file"
-      id = "environment"
-      capture="environment"
-      accept="Video/*"
-    />
-  </form>
-  <br/>
-  <form action = "/action_page.php" enctype="multipart/form-data">
-    <lable for = "myfile">Please Take Pictures of the Washing Machine (please do not delete for now)</lable>
-    <input
-      type = "file"
-      id = "environment"
-      capture="environment"
-      accept="Picture/*"
-    />
-  </form>
-  <br/>
-  </div>
-  )
-}
+
 function Record(){
   return(
   <div id = "container">
@@ -73,23 +44,5 @@ function MyVideoProgram(){
   else{
     console.log("The media is not supported")
   }
-}
-function Credits(){
-  return(
-    <div id = "ourCredits">
-      <br></br>
-      <p>
-        This Website is Created for the Purpose of Webjam 2024
-        and For the Purpose of Tracking Washing Machines
-      </p>
-      <p>
-        Created by Will Bao, Cody Chen, William Chen, Jianan Zhu
-      </p>
-      <p>
-        Programmed in React using Javascript and Python
-      </p>
-      <br></br>
-    </div>
-  )
 }
 export default App;
