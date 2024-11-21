@@ -12,19 +12,21 @@ def cropandsaveandprocess(img_path, lx, ty, rx, by):
     img = cv2.imread(str(img_path))
     grayimg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     invtimg = cv2.bitwise_not(grayimg)
-    _, thresholdedimg = cv2.threshold(invtimg, 50, 255, cv2.THRESH_BINARY)
+    _, thresholdedimg = cv2.threshold(invtimg, 100, 255, cv2.THRESH_BINARY)
     
+    cv2.imshow("name", invtimg)
+    cv2.waitKey(0)
     tmp = thresholdedimg[ty:by, lx:rx]
     cv2.imwrite("tmp.jpg", tmp)
 
-    sum = 0
+    sum = 0.0
     H = by-ty
     W = rx-lx
     for i in range(ty, ty+H//4):
         for j in range(lx, rx):
-            print(thresholdedimg[i,j])
-            sum += thresholdedimg[i,j]
-    sum/=(H//4)*(rx-lx)
+            sum += thresholdedimg[i,j]/(H//4)/(rx-lx)
+    
+    print("###", sum)
     if sum >= 235:
         return False
     else:
