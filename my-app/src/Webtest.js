@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const App = () => {
+const Webtest = () => {
   const [photos, setPhotos] = useState([]); // To store photos for display
   const [folders, setFolders] = useState([]); // To store available folders
   const [selectedFolder, setSelectedFolder] = useState(''); // Folder for displaying photos
@@ -222,4 +222,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Webtest;
