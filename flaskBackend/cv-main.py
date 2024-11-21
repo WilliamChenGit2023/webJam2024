@@ -45,7 +45,7 @@ def main(pfold_str: str, if_new_pos = False):
         else:
             json_path = it
     
-    coord_path = Path(f"./mach-coord/{mach_name}.txt")
+    coord_path = Path(f"./uploads/{mach_name}.txt")
 
     print(coord_path, json_path, img_path)
 
