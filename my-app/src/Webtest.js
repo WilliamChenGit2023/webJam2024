@@ -67,6 +67,9 @@ const Webtest = () => {
   const handleDisplayFolderChange = (event) => {
     const folderName = event.target.value;
     setSelectedFolder(folderName);
+    console.log(folderName);
+    console.log("folder");
+    console.log(selectedFolder)
     if (folderName) {
       fetchPhotosFromFolder(folderName);
     } else {
