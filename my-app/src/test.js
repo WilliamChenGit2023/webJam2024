@@ -66,18 +66,21 @@ const ImageUpload = () => {
 
   // Submit coordinates to the backend
   const handleSubmit = async () => {
-    if (coordinates.length === 2 && selectedFolder) {
+    if (coordinates.length === 2 && selectedFolder && image) {
       try {
-        const response = await axios.post('https://10.12.141.7:5000/save_coordinates', {
+        const response = await axios.post('https://10.12.141.7:5000/upload_coordinates', {
           folder_name: selectedFolder,
+          image_filename: image.split('/').pop(), // Extract the image filename from the URL
           coordinates: coordinates,
         });
         console.log('Response from backend:', response.data);
+        alert('Coordinates uploaded successfully!');
       } catch (error) {
         console.error('Error uploading coordinates:', error.response || error);
+        alert('Error uploading coordinates');
       }
     } else {
-      alert('Please select two points on the image.');
+      alert('Please select two points on the image and ensure the image is loaded.');
     }
   };
 
@@ -95,7 +98,7 @@ const ImageUpload = () => {
         <div>
           <img
             ref={imageRef}
-            src={`https://10.12.141.7:5000/${image}`}
+            src={`https://10.12.141.7:5000${image}`} // Fix image URL
             alt="Uploaded"
             onClick={handleImageClick}
             style={{ cursor: 'crosshair', maxWidth: '500px' }}
