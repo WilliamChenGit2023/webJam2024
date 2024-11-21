@@ -73,8 +73,10 @@ def upload_image():
     
     for filename in os.listdir(folder_path):
         file_path = os.path.join(folder_path, filename)
-        if os.path.isfile(file_path):
+        # Delete only image files
+        if os.path.isfile(file_path) and file_path.lower().endswith(('.jpg', '.jpeg', '.png')):
             os.remove(file_path)
+
 
     # Save image to disk
     with open(image_path, 'wb') as f:
@@ -98,24 +100,26 @@ def create_folder():
     os.makedirs(folder_path)
     return jsonify({'success': True, 'folder_name': folder_name})
 
-# New Route to Upload Coordinates
 @app.route('/upload_coordinates', methods=['POST'])
 def upload_coordinates():
     data = request.json
-    folder_name = data.get('folder_name')  # Folder where the photo is
-    image_filename = data.get('image_filename')  # Name of the image
+    folder_name = data.get('folder_name')  # Folder where the coordinates will be saved
     coordinates = data.get('coordinates')  # Coordinates to be uploaded
 
-    if not folder_name or not image_filename or not coordinates:
-        return jsonify({'error': 'Folder name, image filename, and coordinates are required'}), 400
+    if not folder_name or not coordinates:
+        return jsonify({'error': 'Folder name and coordinates are required'}), 400
 
     # Ensure the folder exists
     folder_path = os.path.join(UPLOAD_FOLDER, folder_name)
     if not os.path.exists(folder_path):
         return jsonify({'error': 'Folder does not exist'}), 400
-
-    # Save the coordinates as a JSON file
-    coordinates_filename = os.path.join(folder_path, image_filename.split('.')[0] + '.json')
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+        # Delete only image files
+        if os.path.isfile(file_path) and file_path.lower().endswith(('.json')):
+            os.remove(file_path)
+    # Save the coordinates as a fixed JSON file
+    coordinates_filename = os.path.join(folder_path, 'coordinates.json')
 
     # Write the coordinates to a JSON file
     with open(coordinates_filename, 'w') as f:
@@ -128,17 +132,16 @@ def upload_coordinates():
 def get_coordinates():
     data = request.json
     folder_name = data.get('folder_name')  # Name of the folder
-    image_filename = data.get('image_filename')  # Name of the image file
 
-    if not folder_name or not image_filename:
-        return jsonify({'error': 'Folder name and image filename are required'}), 400
+    if not folder_name:
+        return jsonify({'error': 'Folder name is required'}), 400
 
     folder_path = os.path.join(UPLOAD_FOLDER, folder_name)
     if not os.path.exists(folder_path):
         return jsonify({'error': 'Folder does not exist'}), 400
 
-    # Find the coordinates file
-    coordinates_filename = os.path.join(folder_path, image_filename.split('.')[0] + '.json')
+    # Find the coordinates file in the folder
+    coordinates_filename = os.path.join(folder_path, 'coordinates.json')
 
     if not os.path.exists(coordinates_filename):
         return jsonify({'error': 'Coordinates file does not exist'}), 400
@@ -148,6 +151,7 @@ def get_coordinates():
         coordinates_data = json.load(f)
 
     return jsonify({'coordinates': coordinates_data['coordinates']})
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000, ssl_context=('server.crt', 'server.key'))
