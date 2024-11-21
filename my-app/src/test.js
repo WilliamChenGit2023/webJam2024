@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import "./Web.css";
+import config from './config';
 
 const ImageUpload = () => {
-  const serverAddress = "https://10.12.141.7:5000"
+  const serverAddress = config.serverAddress
   const [folders, setFolders] = useState([]); 
   const [selectedFolder, setSelectedFolder] = useState('');
   const [image, setImage] = useState(null); 

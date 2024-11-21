@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Web.css'
+import config from './config';
 
 const Webtest = () => {
-  const serverAddress = "https://10.12.141.7:5000";
+  const serverAddress = config.serverAddress;
   const [photos, setPhotos] = useState([]); // To store photos for display
   const [folders, setFolders] = useState([]); // To store available folders
   const [selectedFolder, setSelectedFolder] = useState(''); // Folder for displaying photos
