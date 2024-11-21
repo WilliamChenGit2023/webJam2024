@@ -1,0 +1,11 @@
+#mainBody{
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    margin: auto;
+    width: 50%;
+    height: 800px;
+}
+#videoScreen{
+    width: 100%
+}

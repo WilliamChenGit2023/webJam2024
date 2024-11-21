@@ -168,7 +168,7 @@ const Webtest = () => {
   }, [selectedFolder]);
 
   return (
-    <div>
+    <div id = "mainBody">
       <h1>Manual Photo Capture</h1>
 
       <div>
@@ -180,7 +180,7 @@ const Webtest = () => {
         <button onClick={startCamera}>Start Camera</button>
       )}
 
-      <video ref={videoRef} autoPlay width="320" height="240" style={{ display: isCameraStarted ? 'block' : 'none' }} />
+      <video id = "videoScreen" ref={videoRef} autoPlay width="320" height="240" style={{ display: isCameraStarted ? 'block' : 'none' }} />
       <canvas ref={canvasRef} width="320" height="240" style={{ display: 'none' }} />
 
       <div>

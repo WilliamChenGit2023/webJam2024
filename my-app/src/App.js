@@ -12,6 +12,8 @@ function App() {
         Washer Vision
       </motion.div>
     </div>
+    <div id = "formatting">
+    </div>
     <div>
       <Record></Record>
     </div>
