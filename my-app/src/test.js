@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import "./Web.css";
 
 const ImageUpload = () => {
   const [folders, setFolders] = useState([]); 
