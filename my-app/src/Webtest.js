@@ -26,7 +26,7 @@ const Webtest = () => {
         setBackendStatus('Failed to connect to backend');
       }
     } catch (error) {
-      setBackendStatus('Error connecting to backend:' + serverAddress);
+      setBackendStatus('Error connecting to backend:');
       console.error('Error checking backend:', error);
     }
   };
