@@ -3,6 +3,7 @@ import axios from 'axios';
 import "./Web.css"; //Imported Web.css file
 
 const ImageUpload = () => {
+  const serverAddress = "https://10.12.141.7:5000";
   const [folders, setFolders] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState('');
   const [image, setImage] = useState(null);
@@ -13,7 +14,7 @@ const ImageUpload = () => {
   useEffect(() => {
     const fetchFolders = async () => {
       try {
-        const response = await axios.get('https://10.12.141.7:5000/get_folders');
+        const response = await axios.get(serverAddress+'/get_folders');
         setFolders(response.data.folders);
       } catch (error) {
         console.error('Error fetching folders:', error);
@@ -25,7 +26,7 @@ const ImageUpload = () => {
 
   const fetchImagesFromFolder = async (folderName) => {
     try {
-      const response = await axios.post('https://10.12.141.7:5000/get_images_in_folder', {
+      const response = await axios.post(serverAddress+'/get_images_in_folder', {
         folder_name: folderName,
       });
 
@@ -47,7 +48,7 @@ const ImageUpload = () => {
   const fetchCoordinates = async (folderName, imageUrl) => {
     const imageFilename = imageUrl.split('/').pop();
     try {
-      const response = await axios.post('https://10.12.141.7:5000/get_coordinates', {
+      const response = await axios.post(serverAddress+'/get_coordinates', {
         folder_name: folderName,
         image_filename: imageFilename,
       });
@@ -124,7 +125,7 @@ const ImageUpload = () => {
         <div style={{ position: 'relative' }}>
           <img
             ref={imageRef}
-            src={`https://10.12.141.7:5000${image}`}
+            src={serverAddress+`${image}`}
             alt="Uploaded"
             style={{ maxWidth: '500px', display: 'block' }}
           />

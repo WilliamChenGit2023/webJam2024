@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Web.css'
 
 const Webtest = () => {
+  const serverAddress = "https://10.12.141.7:5000";
   const [photos, setPhotos] = useState([]); // To store photos for display
   const [folders, setFolders] = useState([]); // To store available folders
   const [selectedFolder, setSelectedFolder] = useState(''); // Folder for displaying photos
@@ -16,7 +17,7 @@ const Webtest = () => {
   // Function to check backend connection
   const checkBackend = async () => {
     try {
-      const response = await fetch('https://10.12.141.7:5000/ping');
+      const response = await fetch(serverAddress+'/ping');
       const data = await response.json();
       if (data.status === 'success') {
         setBackendStatus(`Connected: ${data.message}, Number: ${data.number}`);
@@ -32,7 +33,7 @@ const Webtest = () => {
   // Function to fetch the list of folders
   const fetchFolders = async () => {
     try {
-      const response = await fetch('https://10.12.141.7:5000/get_folders');
+      const response = await fetch(serverAddress+'/get_folders');
       const data = await response.json();
       if (data.folders) {
         setFolders(data.folders);
@@ -45,7 +46,7 @@ const Webtest = () => {
   // Function to fetch photos from the selected folder
   const fetchPhotosFromFolder = async (folderName) => {
     try {
-      const response = await fetch('https://10.12.141.7:5000/get_images_in_folder', {
+      const response = await fetch(serverAddress+'/get_images_in_folder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +55,7 @@ const Webtest = () => {
       });
       const data = await response.json();
       if (data.images) {
-        setPhotos(data.images.map(imageUrl => `https://10.12.141.7:5000${imageUrl}`));
+        setPhotos(data.images.map(imageUrl => serverAddress+`${imageUrl}`));
       } else {
         setPhotos([]);
       }
@@ -102,7 +103,7 @@ const Webtest = () => {
   // Upload photo to the backend
   const uploadPhoto = async (imageData) => {
     try {
-      const response = await fetch('https://10.12.141.7:5000/upload', {
+      const response = await fetch(serverAddress+'/upload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -127,7 +128,7 @@ const Webtest = () => {
       return;
     }
     try {
-      const response = await fetch('https://10.12.141.7:5000/create_folder', {
+      const response = await fetch(serverAddress+'/create_folder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

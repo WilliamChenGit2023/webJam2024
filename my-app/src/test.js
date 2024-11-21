@@ -3,6 +3,7 @@ import axios from 'axios';
 import "./Web.css";
 
 const ImageUpload = () => {
+  const serverAddress = "https://10.12.141.7:5000"
   const [folders, setFolders] = useState([]); 
   const [selectedFolder, setSelectedFolder] = useState('');
   const [image, setImage] = useState(null); 
@@ -13,7 +14,7 @@ const ImageUpload = () => {
   useEffect(() => {
     const fetchFolders = async () => {
       try {
-        const response = await axios.get('https://10.12.141.7:5000/get_folders');
+        const response = await axios.get(serverAddress+'/get_folders');
         setFolders(response.data.folders);
       } catch (error) {
         console.error('Error fetching folders:', error);
@@ -27,7 +28,7 @@ const ImageUpload = () => {
 
   const fetchImagesFromFolder = async (folderName) => {
     try {
-      const response = await axios.post('https://10.12.141.7:5000/get_images_in_folder', {
+      const response = await axios.post(serverAddress+'/get_images_in_folder', {
         folder_name: folderName,
       });
       if (response.data.images && response.data.images.length > 0) {
@@ -104,7 +105,7 @@ const ImageUpload = () => {
   const handleSubmit = async () => {
     if (coordinates.length === 2 && selectedFolder && image) {
       try {
-        const response = await axios.post('https://10.12.141.7:5000/upload_coordinates', {
+        const response = await axios.post(serverAddress+'/upload_coordinates', {
           folder_name: selectedFolder,
           image_filename: image.split('/').pop(),
           coordinates: coordinates,
@@ -136,7 +137,7 @@ const ImageUpload = () => {
         <div style={{ position: 'relative' }}>
           <img
             ref={imageRef}
-            src={`https://10.12.141.7:5000${image}`}
+            src={serverAddress+`${image}`}
             alt="Uploaded"
             onClick={handleImageClick}
             style={{ cursor: 'crosshair', maxWidth: '500px' }}
