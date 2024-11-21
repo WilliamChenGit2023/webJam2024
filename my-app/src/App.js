@@ -80,7 +80,7 @@ function Credits(){
       <br></br>
       <p>
         This Website is Created for the Purpose of Webjam 2024
-        and For the Purpose of Traking Washing Machines
+        and For the Purpose of Tracking Washing Machines
       </p>
       <p>
         Created by Will Bao, Cody Chen, William Chen, Jianan Zhu
