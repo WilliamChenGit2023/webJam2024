@@ -67,6 +67,9 @@ const Webtest = () => {
   const handleDisplayFolderChange = (event) => {
     const folderName = event.target.value;
     setSelectedFolder(folderName);
+    console.log(folderName);
+    console.log("folder");
+    console.log(selectedFolder)
     if (folderName) {
       fetchPhotosFromFolder(folderName);
     } else {
@@ -165,7 +168,7 @@ const Webtest = () => {
   }, [selectedFolder]);
 
   return (
-    <div>
+    <div id = "mainBody">
       <h1>Manual Photo Capture</h1>
 
       <div>
@@ -177,7 +180,7 @@ const Webtest = () => {
         <button onClick={startCamera}>Start Camera</button>
       )}
 
-      <video ref={videoRef} autoPlay width="320" height="240" style={{ display: isCameraStarted ? 'block' : 'none' }} />
+      <video id = "videoScreen" ref={videoRef} autoPlay width="320" height="240" style={{ display: isCameraStarted ? 'block' : 'none' }} />
       <canvas ref={canvasRef} width="320" height="240" style={{ display: 'none' }} />
 
       <div>
