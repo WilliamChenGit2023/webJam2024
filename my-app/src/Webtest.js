@@ -21,9 +21,9 @@ const Webtest = () => {
       const response = await fetch(serverAddress+'/ping');
       const data = await response.json();
       if (data.status === 'success') {
-        setBackendStatus(`Connected: ${data.message}, Number: ${data.number}`);
+        setBackendStatus(`Connected: ${data.message}, Number: ${data.number},Server: ${serverAddress}`);
       } else {
-        setBackendStatus('Failed to connect to backend');
+        setBackendStatus('Failed to connect to backend,Server: '+serverAddress);
       }
     } catch (error) {
       setBackendStatus('Error connecting to backend:');
