@@ -123,5 +123,31 @@ def upload_coordinates():
 
     return jsonify({'success': True, 'message': 'Coordinates uploaded successfully'})
 
+# Fetch coordinates from the folder
+@app.route('/get_coordinates', methods=['POST'])
+def get_coordinates():
+    data = request.json
+    folder_name = data.get('folder_name')  # Name of the folder
+    image_filename = data.get('image_filename')  # Name of the image file
+
+    if not folder_name or not image_filename:
+        return jsonify({'error': 'Folder name and image filename are required'}), 400
+
+    folder_path = os.path.join(UPLOAD_FOLDER, folder_name)
+    if not os.path.exists(folder_path):
+        return jsonify({'error': 'Folder does not exist'}), 400
+
+    # Find the coordinates file
+    coordinates_filename = os.path.join(folder_path, image_filename.split('.')[0] + '.json')
+
+    if not os.path.exists(coordinates_filename):
+        return jsonify({'error': 'Coordinates file does not exist'}), 400
+
+    # Load and return the coordinates
+    with open(coordinates_filename, 'r') as f:
+        coordinates_data = json.load(f)
+
+    return jsonify({'coordinates': coordinates_data['coordinates']})
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000, ssl_context=('server.crt', 'server.key'))

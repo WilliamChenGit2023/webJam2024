@@ -17,6 +17,7 @@ root.render(
     <App />
     <Webtest />
     <ImageUpload />
+    <I2 />
     <WebBottom />
   </React.StrictMode>
 );
