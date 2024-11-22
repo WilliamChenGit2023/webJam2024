@@ -164,6 +164,7 @@ const Webtest = () => {
   // Polling for recording
   useEffect(() => {
     const interval = isRecording ? setInterval(capturePhoto, 2000) : null;
+    console.log(selectedFolder);
     return () => clearInterval(interval);
   }, [isRecording]);
 
