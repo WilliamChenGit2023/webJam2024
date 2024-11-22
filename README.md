@@ -31,3 +31,8 @@ Created for [ICSSC](https://studentcouncil.ics.uci.edu/) WebJam 2024 at UCI by W
 
 
 Programmed in Javascript and Python using [React](https://react.dev/) as the Framework
+
+
+### Algorithm End
+
+For the algorithm part, we use python opencv2 to process the images stored and detect the content in the washing machine's panel. It will show whether the washing machine is working or not. The files are in ./flaskBackend and ./otherPython.
