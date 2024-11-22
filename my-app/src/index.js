@@ -20,4 +20,4 @@ root.render(
     <Status />
     <WebBottom />
   </React.StrictMode>
-);
+); 
