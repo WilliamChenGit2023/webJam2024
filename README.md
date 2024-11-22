@@ -26,11 +26,16 @@ Film the Washing Machine (requires digital text) with another device (phones or 
 Choose coordinates for which the Washing Machine's digtal clock is located.
 Check the status of the Status on the Washing Machines!!!
 
-## Credits
-Created for [ICSSC](https://studentcouncil.ics.uci.edu/) WebJam 2024 at UCI by Will Bao, Cody Chen, William Chen, and Jianan Zhu
 
+## Credits 
 
-Programmed in Javascript and Python using [React](https://react.dev/) as the Framework
+This website is create for the 2024 Webjam event at UCI hosted by [ICSSC](https://studentcouncil.ics.uci.edu/).
+The main purpose of this website is to reduce wait times for doing laundries in a public setting.
+We hope that this program can be utilized to simiplfy the life of others and can also be used by other industries, such as the Laundromat Industry, to increase their revenue.
+
+Programmed by Will Bao, Cody Chen, William Chen, and Jianan Zhu.
+
+Programmed in Javascript and Python using React as the framework.
 
 
 ### Algorithm End
