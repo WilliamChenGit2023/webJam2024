@@ -24,12 +24,11 @@ def update_status_periodically():
         for folder_name in folders:
             folder_path = os.path.join(UPLOAD_FOLDER, folder_name)
             print(folder_path)
-            print("hi")
             status_file_path = os.path.join(folder_path, 'state.txt')
             try:
                 # Call the function from `cvmain.py` to determine the status
                 status = checkFinished(folder_path)  # Assuming it returns a boolean or similar
-                print("2")
+                print(status)
                 with open(status_file_path, 'w') as f:
                     f.write('true' if status else 'false')
             except Exception as e:
@@ -182,8 +181,8 @@ def get_coordinates():
 @app.route('/get_status', methods=['GET'])
 def get_status():
     folder_name = request.args.get('folder_name')  # Fetch query parameter
-    print("hi")  # Debugging message
-    print(f"Folder name: {folder_name}")  # Debugging the received folder name
+    #print("hi")  # Debugging message
+    #print(f"Folder name: {folder_name}")  # Debugging the received folder name
 
     if not folder_name:
         return jsonify({'error': 'Folder name is required'}), 400

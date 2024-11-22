@@ -36,30 +36,30 @@ def cropandsaveandprocess(img_path, lx, ty, rx, by):
     #cv2.imshow("name", tmp)
     #cv2.imwrite("firstqt.png", tmp)
 
-    print("###", sum)
+    #print("###", sum)
     if sum >= 235:
         return False
     else:
         return True
 
 
-def main(pfold_str: str, if_new_pos = False):
+def checkFinished(pfold_str: str):
     pfold = Path(pfold_str)
     mach_name = pfold.parts[ len(pfold.parts)-1 ]
 
     img_path = None
     json_path = None
     for it in pfold.iterdir():
-        print("** ",it, it.suffix)
+        #print("** ",it, it.suffix)
         if it.suffix == '.jpg' or it.suffix == '.png':
             img_path = it
-        else:
+        elif (it.suffix == '.json'):
             json_path = it
-        print("")
+        #print("")
     
     coord_path = Path(f"./uploads/{mach_name}.txt")
 
-    print(coord_path, json_path, img_path)
+    #print(coord_path, json_path, img_path)
 
     with json_path.open() as fin:
         json_text = fin.read()
@@ -76,8 +76,7 @@ def main(pfold_str: str, if_new_pos = False):
         tmp = ty; ty = by; by = tmp
     print ("****", lx, ty, rx, by)
     ans = cropandsaveandprocess(img_path, lx, ty, rx, by)
+    print(ans)
     return ans
 
 
-if __name__=="__main__":
-    print(main("./uploads/D1"))
