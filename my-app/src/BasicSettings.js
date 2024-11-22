@@ -175,7 +175,14 @@ const BasicSettings = () => {
           animate={{rotate: 0, scale: 1}}
           transition={{duration: 1, ease: "backInOut"}}
         >
-        <video id = "videoScreen" ref={videoRef} autoPlay width="640" height="480" style={{ display: isCameraStarted ? 'block' : 'none' }} />
+        <video 
+        id = "videoScreen" 
+        ref={videoRef} 
+        width="640" 
+        autoPlay={true} 
+        playsInline={true} 
+        muted={true}
+        height="480" style={{ display: isCameraStarted ? 'block' : 'none' }} />
       <canvas ref={canvasRef} width="640" height="480" style={{ display: 'none' }} />
         </motion.div>)}
       </div>
