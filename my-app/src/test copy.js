@@ -95,10 +95,10 @@ const ImageUploadAndStatus = () => {
     if (coordinates && coordinates.length === 2 && imageRef.current && canvasRef.current) {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
-      const img = imageRef.current;
 
-      canvas.width = img.offsetWidth;
-      canvas.height = img.offsetHeight;
+      // Set canvas size to fixed 640x480
+      canvas.width = 640;
+      canvas.height = 480;
 
       context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -166,12 +166,12 @@ const ImageUploadAndStatus = () => {
       )}
 
       {image && (
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative', width: '640px', height: '480px' }}>
           <img
             ref={imageRef}
             src={serverAddress + `${image}`}
             alt="Uploaded"
-            style={{ maxWidth: '500px', display: 'block' }}
+            style={{ width: '640px', height: '480px', display: 'block' }}
           />
           <canvas
             ref={canvasRef}
@@ -179,6 +179,8 @@ const ImageUploadAndStatus = () => {
               position: 'absolute',
               top: 0,
               left: 0,
+              width: '640px',
+              height: '480px',
               pointerEvents: 'none',
             }}
           />
