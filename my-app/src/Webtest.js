@@ -9,28 +9,12 @@ const Webtest = () => {
   const [folders, setFolders] = useState([]); // To store available folders
   const [selectedFolder, setSelectedFolder] = useState(''); // Folder for displaying photos
   const [recordingFolder, setRecordingFolder] = useState(''); // Folder for uploading photos
-  const [backendStatus, setBackendStatus] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
   const [isCameraStarted, setIsCameraStarted] = useState(false);
   const [newFolderName, setNewFolderName] = useState('');
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
-  // Function to check backend connection
-  const checkBackend = async () => {
-    try {
-      const response = await fetch(serverAddress+'/ping');
-      const data = await response.json();
-      if (data.status === 'success') {
-        setBackendStatus(`Connected: ${data.message}, Number: ${data.number},Server: ${serverAddress}`);
-      } else {
-        setBackendStatus('Failed to connect to backend,Server: '+serverAddress);
-      }
-    } catch (error) {
-      setBackendStatus('Error connecting to backend:');
-      console.error('Error checking backend:', error);
-    }
-  };
 
   // Function to fetch the list of folders
   const fetchFolders = async () => {
@@ -160,7 +144,6 @@ const Webtest = () => {
   };
 
   useEffect(() => {
-    checkBackend();
     fetchFolders(); // Fetch folder list on mount
   }, []);
 
@@ -182,10 +165,6 @@ const Webtest = () => {
     <div id = "mainBody">
       <h1>Manual Photo Capture</h1>
 
-      <div>
-        <h2>Backend Status</h2>
-        <p>{backendStatus ? backendStatus : 'Checking backend...'}</p>
-      </div>
       <div className='main-container2'>
         {!isCameraStarted && (
           <button className='button' onClick={startCamera}>Start Camera</button>
@@ -215,17 +194,6 @@ const Webtest = () => {
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h480q33 0 56.5 23.5T720-720v180l160-160v440L720-420v180q0 33-23.5 56.5T640-160H160Zm0-80h480v-480H160v480Zm0 0v-480 480Z"/></svg>
       </button>
 
-      <div className='main-container2'>
-        <h2>Create New Folder</h2>
-        <input 
-          type="text" 
-          value={newFolderName} 
-          onChange={(e) => setNewFolderName(e.target.value)} 
-          placeholder="Folder Name" 
-        />
-        <button onClick={createFolder}>Create Folder</button>
-      </div>
-
       <div>
         <h2>Captured Photos in "{selectedFolder}" Folder</h2>
         <select onChange={handleDisplayFolderChange} value={selectedFolder}>
@@ -239,6 +207,17 @@ const Webtest = () => {
             <img key={index} src={photo} alt={`Captured ${index}`} style={{ width: '100px', height: 'auto', margin: '5px' }} />
           ))}
         </div>
+      </div>
+
+      <div className='main-container2'>
+        <h2>Create New Folder</h2>
+        <input 
+          type="text" 
+          value={newFolderName} 
+          onChange={(e) => setNewFolderName(e.target.value)} 
+          placeholder="Folder Name" 
+        />
+        <button onClick={createFolder}>Create Folder</button>
       </div>
     </div>
   );

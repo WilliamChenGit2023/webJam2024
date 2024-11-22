@@ -5,6 +5,7 @@ import I2 from './test copy';
 import Webtest from './Webtest';
 import Status from './Webtest copy'
 import FolderStatusTable from "./Webtest copy 2";
+import CheckBackendStatus from "./BackendStatus";
 
 
 function WebTab() {
@@ -39,6 +40,11 @@ function WebTab() {
             onClick={() => handleTabClick("Content4")}>
             Washing Machine Status
           </button>
+          <button
+            className={`links ${activeTab === "Content5" ? "active" : ""}`}
+            onClick={() => handleTabClick("Content5")}>
+            Backend Status
+          </button>
         </div>
         <div
           id="Content1"
@@ -59,6 +65,11 @@ function WebTab() {
           id="Content4"
           className={`tabContent ${activeTab === "Content4" ? "active" : ""}`}>
           <FolderStatusTable />
+        </div>
+        <div
+          id="Content5"
+          className={`tabContent ${activeTab === "Content5" ? "active" : ""}`}>
+          <CheckBackendStatus />
         </div>
       </div>
     );
