@@ -99,7 +99,9 @@ const Webtest = () => {
 
   // Capture photo and upload it
   const capturePhoto = async () => {
+    console.log(canvasRef.current)
     if (videoRef.current && canvasRef.current && recordingFolder) {
+      console.log("hi2")
       const context = canvasRef.current.getContext('2d');
       context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
       const imageData = canvasRef.current.toDataURL('image/jpeg');
@@ -126,6 +128,7 @@ const Webtest = () => {
   // Toggle recording
   const toggleRecording = () => {
     setIsRecording(prevState => !prevState);
+    console.log("done");
   };
 
   // Create a new folder
@@ -193,7 +196,8 @@ const Webtest = () => {
           animate={{rotate: 0, scale: 1}}
           transition={{duration: 1, ease: "backInOut"}}
         >
-        <video id = "videoScreen" ref={videoRef} autoPlay style={{ display: isCameraStarted ? 'block' : 'none' }} />
+        <video id = "videoScreen" ref={videoRef} autoPlay width="640" height="480" style={{ display: isCameraStarted ? 'block' : 'none' }} />
+      <canvas ref={canvasRef} width="640" height="480" style={{ display: 'none' }} />
         </motion.div>)}
       </div>
       <div>
