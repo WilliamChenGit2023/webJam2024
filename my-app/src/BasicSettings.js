@@ -167,7 +167,9 @@ const BasicSettings = () => {
       <h1>Check or Add/Delete Laundry Machines</h1>
       <div className='main-container2'>
         {!isCameraStarted && (
-          <button className='button' onClick={startCamera}>Start Camera</button>
+          <button className='button' onClick={startCamera}>Start Camera
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h480q33 0 56.5 23.5T720-720v180l160-160v440L720-420v180q0 33-23.5 56.5T640-160H160Zm0-80h480v-480H160v480Zm0 0v-480 480Z"/></svg>
+          </button>
         )}
         {isCameraStarted && (<motion.div
           initial={{rotate: 180, scale:0}}
@@ -194,7 +196,7 @@ const BasicSettings = () => {
 
       <button onClick={toggleRecording} className={`button ${isRecording ? "recording" : "not-recording"}`}>
         {isRecording ? 'Stop Recording ' : 'Start Recording '}
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h480q33 0 56.5 23.5T720-720v180l160-160v440L720-420v180q0 33-23.5 56.5T640-160H160Zm0-80h480v-480H160v480Zm0 0v-480 480Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-280q83 0 141.5-58.5T680-480q0-83-58.5-141.5T480-680q-83 0-141.5 58.5T280-480q0 83 58.5 141.5T480-280Zm0 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
       </button>
       </div>
       <div>
@@ -223,7 +225,9 @@ const BasicSettings = () => {
           onChange={(e) => setNewFolderName(e.target.value)} 
           placeholder="Choose Laundry Machine Name" 
         />
-        <button className='button' onClick={createFolder}>Create Laundry Machine</button>
+        <button className='button' onClick={createFolder}>Create Laundry Machine
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+        </button>
       </div>
       <DeleteFolder />
     </div>
