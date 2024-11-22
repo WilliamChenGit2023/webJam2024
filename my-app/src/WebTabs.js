@@ -1,7 +1,7 @@
 import "./WebTabs.css"
 import React, { useState } from "react";
-import CoordinateSelect from './CoordinateSelect';
-import I2 from './StatusCheck';
+import ImageUpload from './test';
+import I2 from './test copy';
 import BasicSettings from './BasicSettings';
 import CheckBackendStatus from "./BackendStatus";
 
@@ -48,7 +48,7 @@ function WebTab() {
         <div
           id="Content2"
           className={`tabContent ${activeTab === "Content2" ? "active" : ""}`}>
-          <CoordinateSelect />
+          <ImageUpload />
         </div>
         <div
           id="Content3"

@@ -164,7 +164,7 @@ const BasicSettings = () => {
 
   return (
     <div id = "mainBody">
-      <h1>Check or Add/Delete Laundry Machines</h1>
+      <h1>Manual Add/Delete Laundry Machines</h1>
       <div className='main-container2'>
         {!isCameraStarted && (
           <button className='button' onClick={startCamera}>Start Camera</button>
@@ -184,8 +184,8 @@ const BasicSettings = () => {
         <h2>Select Laundry Machine to Record For: </h2>
         <select 
         onChange={(e) => setRecordingFolder(e.target.value)} value={recordingFolder}
-        style={{ marginLeft: "10px", fontSize: "16px", padding: "5px" , width: "65%"}}>
-          <option value="">--Select Laundry Machine--</option>
+        style={{ marginLeft: "10px", fontSize: "16px", padding: "5px" }}>
+          <option value="">--Select a folder--</option>
           {folders.map((folder, index) => (
             <option key={index} value={folder}>{folder}</option>
           ))}
@@ -201,8 +201,8 @@ const BasicSettings = () => {
         <h2> View Stream for Laundry Machine: {selectedFolder} </h2>
         <select 
         onChange={handleDisplayFolderChange} value={selectedFolder}
-        style={{ marginLeft: "10px", fontSize: "16px", padding: "5px", width: "65%" }}> 
-          <option value="">--Select Laundry Machine--</option>
+        style={{ marginLeft: "10px", fontSize: "16px", padding: "5px" }}>
+          <option value="">--Select a folder--</option>
           {folders.map((folder, index) => (
             <option key={index} value={folder}>{folder}</option>
           ))}
@@ -220,9 +220,9 @@ const BasicSettings = () => {
           type="text" 
           value={newFolderName} 
           onChange={(e) => setNewFolderName(e.target.value)} 
-          placeholder="Choose Laundry Machine Name" 
+          placeholder="Folder Name" 
         />
-        <button className='button' onClick={createFolder}>Create Laundry Machine</button>
+        <button className='button' onClick={createFolder}>Create Folder</button>
       </div>
       <DeleteFolder />
     </div>
