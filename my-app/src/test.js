@@ -141,12 +141,12 @@ const ImageUpload = () => {
             src={serverAddress+`${image}`}
             alt="Uploaded"
             onClick={handleImageClick}
-            style={{ cursor: 'crosshair', maxWidth: '500px' }}
+            style={{ cursor: 'crosshair', maxWidth: '640' , maxHeight: '480' }}
           />
           <canvas
             ref={canvasRef}
-            width="500"
-            height="500"
+            width="640"
+            height="480"
             style={{
               position: 'absolute',
               top: 0,
