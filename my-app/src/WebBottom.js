@@ -20,7 +20,7 @@ function Credits(){
           and For the Purpose of Tracking Washing Machines
         </p>
         <p>
-          Created by Will Bao, Cody Chen, William Chen, Jianan Zhu
+          Created by Will Bao, Cody Chen, William Chen, and Jianan Zhu
         </p>
         <p>
           Programmed in React using Javascript and Python

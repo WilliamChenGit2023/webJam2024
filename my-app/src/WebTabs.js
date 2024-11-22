@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import ImageUpload from './test';
 import I2 from './test copy';
 import Webtest from './Webtest';
+import Status from './Webtest copy'
 
 
 function WebTab() {
@@ -16,7 +17,6 @@ function WebTab() {
   
     return (
       <div>
-        <p>This is the Tab Menu</p>
         <div className="tab">
           <button
             className={`links ${activeTab === "Content1" ? "active" : ""}`}
@@ -33,6 +33,11 @@ function WebTab() {
             onClick={() => handleTabClick("Content3")}>
             Coordinates Viewer
           </button>
+          <button
+            className={`links ${activeTab === "Content4" ? "active" : ""}`}
+            onClick={() => handleTabClick("Content4")}>
+            Washing Machine Status
+          </button>
         </div>
         <div
           id="Content1"
@@ -48,6 +53,11 @@ function WebTab() {
           id="Content3"
           className={`tabContent ${activeTab === "Content3" ? "active" : ""}`}>
           <I2 />
+        </div>
+        <div
+          id="Content4"
+          className={`tabContent ${activeTab === "Content4" ? "active" : ""}`}>
+          <Status />
         </div>
       </div>
     );
