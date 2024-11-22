@@ -1,6 +1,6 @@
 // src/config.js
 const config = {
-    serverAddress: "https://10.12.141.7:5000"
+    serverAddress: "https://webjambackend-e277cbd6cc5e.herokuapp.com"
   };
   
   export default config;
