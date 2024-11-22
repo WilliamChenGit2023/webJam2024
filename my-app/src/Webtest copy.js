@@ -20,7 +20,17 @@ const Status = () => {
         console.error(err);
         setError("Failed to fetch folders.");
       });
-  }, []);
+
+    // Set up interval to refresh status every 30 seconds
+    const intervalId = setInterval(() => {
+      if (selectedFolder) {
+        fetchStatus(selectedFolder);
+      }
+    }, 30000); // Refresh every 30 seconds
+
+    // Clean up interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [selectedFolder]);
 
   // Fetch status for the selected folder
   const fetchStatus = (folder) => {

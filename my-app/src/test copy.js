@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import "./Web.css"; //Imported Web.css file
+import "./Web.css"; // Imported Web.css file
 import config from './config';
 
-const ImageUpload = () => {
+const ImageUploadAndStatus = () => {
   const serverAddress = config.serverAddress;
+
+  // Image Upload and Rectangle Drawing State
   const [folders, setFolders] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState('');
   const [image, setImage] = useState(null);
@@ -12,22 +14,34 @@ const ImageUpload = () => {
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
 
-  useEffect(() => {
-    const fetchFolders = async () => {
-      try {
-        const response = await axios.get(serverAddress+'/get_folders');
-        setFolders(response.data.folders);
-      } catch (error) {
-        console.error('Error fetching folders:', error);
-      }
-    };
+  // Status State
+  const [status, setStatus] = useState(""); // Status of selected folder
+  const [error, setError] = useState(""); // Error message, if any
 
-    fetchFolders();
-  }, []);
+  // Fetch list of folders
+  useEffect(() => {
+    axios.get(serverAddress + '/get_folders')
+      .then((response) => {
+        setFolders(response.data.folders);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Failed to fetch folders.");
+      });
+
+    // Set up interval to refresh status every 30 seconds
+    const intervalId = setInterval(() => {
+      if (selectedFolder) {
+        fetchStatus(selectedFolder);
+      }
+    }, 30000); // Refresh every 30 seconds
+
+    return () => clearInterval(intervalId); // Clean up interval on component unmount
+  }, [selectedFolder]);
 
   const fetchImagesFromFolder = async (folderName) => {
     try {
-      const response = await axios.post(serverAddress+'/get_images_in_folder', {
+      const response = await axios.post(serverAddress + '/get_images_in_folder', {
         folder_name: folderName,
       });
 
@@ -49,7 +63,7 @@ const ImageUpload = () => {
   const fetchCoordinates = async (folderName, imageUrl) => {
     const imageFilename = imageUrl.split('/').pop();
     try {
-      const response = await axios.post(serverAddress+'/get_coordinates', {
+      const response = await axios.post(serverAddress + '/get_coordinates', {
         folder_name: folderName,
         image_filename: imageFilename,
       });
@@ -58,6 +72,23 @@ const ImageUpload = () => {
       console.error('Error fetching coordinates:', error);
       setCoordinates(null);
     }
+  };
+
+  const fetchStatus = (folder) => {
+    if (!folder) return;
+
+    axios.get(serverAddress + '/get_status', {
+      params: { folder_name: folder }, // Pass folder_name as query parameter
+    })
+      .then((response) => {
+        setStatus(response.data.status);
+        setError(""); // Clear any previous errors
+      })
+      .catch((err) => {
+        console.error(err);
+        setStatus("");
+        setError(err.response?.data?.error || `Failed to fetch status for folder: ${folder}`);
+      });
   };
 
   const drawRectangle = () => {
@@ -86,24 +117,15 @@ const ImageUpload = () => {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (selectedFolder) {
-        fetchImagesFromFolder(selectedFolder);
-      }
-    }, 5000); // Poll every 5 seconds
-
-    return () => clearInterval(intervalId); // Cleanup on unmount
-  }, [selectedFolder]);
-
-  useEffect(() => {
     drawRectangle();
   }, [coordinates, image]);
 
-  const handleFolderChange = (event) => {
-    const folderName = event.target.value;
-    setSelectedFolder(folderName);
-    if (folderName) {
-      fetchImagesFromFolder(folderName);
+  const handleFolderChange = (e) => {
+    const folder = e.target.value;
+    setSelectedFolder(folder);
+    fetchStatus(folder); // Fetch status whenever folder changes
+    if (folder) {
+      fetchImagesFromFolder(folder);
     } else {
       setImage(null);
       setCoordinates(null);
@@ -111,22 +133,43 @@ const ImageUpload = () => {
   };
 
   return (
-    <div>
-      <h1>Select Folder and View Image with Rectangle</h1>
-      <select onChange={handleFolderChange} value={selectedFolder}>
-        <option value="">Select Folder</option>
-        {folders.map((folder, index) => (
-          <option key={index} value={folder}>
+    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
+      <h1>Folder Status and Image Upload</h1>
+
+      <label htmlFor="folder-select" style={{ fontSize: "18px" }}>
+        Select a folder:
+      </label>
+      <select
+        id="folder-select"
+        value={selectedFolder}
+        onChange={handleFolderChange}
+        style={{ marginLeft: "10px", fontSize: "16px", padding: "5px" }}
+      >
+        <option value="" disabled>
+          Choose a folder
+        </option>
+        {folders.map((folder) => (
+          <option key={folder} value={folder}>
             {folder}
           </option>
         ))}
       </select>
 
+      {selectedFolder && (
+        <div style={{ marginTop: "20px", fontSize: "18px" }}>
+          <p><strong>Selected Folder:</strong> {selectedFolder}</p>
+          {status && (
+            <p><strong>Status:</strong> {status === "true" ? "✅ True" : "❌ False"}</p>
+          )}
+          {error && <p style={{ color: "red" }}><strong>Error:</strong> {error}</p>}
+        </div>
+      )}
+
       {image && (
         <div style={{ position: 'relative' }}>
           <img
             ref={imageRef}
-            src={serverAddress+`${image}`}
+            src={serverAddress + `${image}`}
             alt="Uploaded"
             style={{ maxWidth: '500px', display: 'block' }}
           />
@@ -160,4 +203,4 @@ const ImageUpload = () => {
   );
 };
 
-export default ImageUpload;
+export default ImageUploadAndStatus;
