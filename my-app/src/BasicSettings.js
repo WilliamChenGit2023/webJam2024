@@ -169,7 +169,7 @@ const BasicSettings = () => {
         {!isCameraStarted && (
           <button className='button' onClick={startCamera}>Start Camera</button>
         )}
-        {isCameraStarted && (<motion.div
+        {(<motion.div
           initial={{rotate: 180, scale:0}}
           exit={{rotate:180, scale: 0}}
           animate={{rotate: 0, scale: 1}}
