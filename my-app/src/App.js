@@ -13,9 +13,14 @@ function App() {
         Washer Vision
       </motion.div>
     </div>
-    <div className='img'>
+    <motion.div className='img'
+      initial={{y: 0}}
+      animate={{ y: [0, 100, 0] }}
+      exit={{y: 0}}
+      transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+    >
     <img src = {require('./art-assets/laundry-machine.png')} width = "500" height = "500"></img>
-    </div>
+    </motion.div>
     </div>
   );
 }

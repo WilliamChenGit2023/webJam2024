@@ -6,7 +6,7 @@ body{
   padding-top: 100;
   display: grid;
   place-content: center;
-  gap: 50px;
+  gap: 120px;
   margin-bottom: 200px;
 }
 
