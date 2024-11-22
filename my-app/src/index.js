@@ -9,7 +9,7 @@ import ImageUpload from './test';
 import I2 from './test copy';
 import Status from './Webtest copy';
 import FolderStatusTable from './Webtest copy 2';
-
+import DeleteFolder from './test copy 2';
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
@@ -18,6 +18,7 @@ root.render(
   <React.StrictMode>
     <App />
     <WebTab />
+    <DeleteFolder />
     <WebBottom />
   </React.StrictMode>
 ); 

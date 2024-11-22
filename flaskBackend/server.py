@@ -7,6 +7,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from cvmain import checkFinished
 import time
+import shutil
 
 
 app = Flask(__name__)
@@ -202,6 +203,26 @@ def get_status():
     else:
         return jsonify({'error': 'Status file not found'}), 404
 
+@app.route('/delete_folder', methods=['POST'])
+def delete_folder():
+    data = request.json
+    folder_name = data.get('folder_name')
+
+    if not folder_name:
+        return jsonify({'error': 'Folder name is required'}), 400
+
+    folder_path = os.path.join(UPLOAD_FOLDER, folder_name)
+    
+    if not os.path.exists(folder_path):
+        return jsonify({'error': 'Folder does not exist'}), 400
+    
+    try:
+        # Delete the folder and its contents
+        shutil.rmtree(folder_path)
+        return jsonify({'success': True, 'message': f'Folder {folder_name} deleted successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': 'Error deleting folder', 'details': str(e)}), 500
+    
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000, ssl_context=('server.crt', 'server.key'))
