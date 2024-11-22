@@ -45,33 +45,21 @@ def main(pfold_str: str, if_new_pos = False):
         else:
             json_path = it
     
-    coord_path = Path(f"./mach-coord/{mach_name}.txt")
+    coord_path = Path(f"./uploads/{mach_name}.txt")
 
     print(coord_path, json_path, img_path)
 
-    if if_new_pos == False:
-        with coord_path.open() as fin:
-            info = [int(x) for x in fin.read().split()]
-        lx = info[0]
-        ty = info[1]
-        rx = info[2]
-        by = info[3]
-        ans = cropandsaveandprocess(img_path, lx, ty, rx, by)
-    else:
-        with json_path.open() as fin:
-            json_text = fin.read()
+    with json_path.open() as fin:
+        json_text = fin.read()
         json_dic = json.loads(json_text)
         lx = int(json_dic['coordinates'][0]['x'])
         rx = int(json_dic['coordinates'][1]['x'])
         ty = int(json_dic['coordinates'][0]['y'])
         by = int(json_dic['coordinates'][1]['y'])
-        if coord_path.exists() == False:
-            coord_path.touch()
-        with coord_path.open("w") as fout:
-            fout.write(f"{lx} {ty} {rx} {by}")
-        ans = cropandsaveandprocess(img_path, lx, ty, rx, by)
+
+    ans = cropandsaveandprocess(img_path, lx, ty, rx, by)
     return ans
 
 
 if __name__=="__main__":
-    print(main("../W1", if_new_pos=True))
+    print(main("../W1"))
