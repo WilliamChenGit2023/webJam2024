@@ -2,8 +2,12 @@ import os
 import base64
 import uuid
 import json
+import threading
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
+from cvmain import checkFinished
+import time
+
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -13,6 +17,29 @@ UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
+#update function
+def update_status_periodically():
+    while True:
+        folders = [f for f in os.listdir(UPLOAD_FOLDER) if os.path.isdir(os.path.join(UPLOAD_FOLDER, f))]
+        for folder_name in folders:
+            folder_path = os.path.join(UPLOAD_FOLDER, folder_name)
+            print(folder_path)
+            print("hi")
+            status_file_path = os.path.join(folder_path, 'state.txt')
+            try:
+                # Call the function from `cvmain.py` to determine the status
+                status = checkFinished(folder_path)  # Assuming it returns a boolean or similar
+                print("2")
+                with open(status_file_path, 'w') as f:
+                    f.write('true' if status else 'false')
+            except Exception as e:
+                print(f"Error updating status for folder {folder_name}: {e}")
+        time.sleep(30)  # Update every 30 seconds
+
+# Start the status update thread
+status_thread = threading.Thread(target=update_status_periodically, daemon=True)
+status_thread.start()
+
 # Serve uploaded files
 @app.route('/uploads/<folder_name>/<filename>', methods=['GET'])
 def uploaded_file(folder_name, filename):
@@ -21,7 +48,7 @@ def uploaded_file(folder_name, filename):
 
 @app.route('/ping', methods=['GET'])
 def ping():
-    return jsonify({'status': 'success', 'message': 'Backend is connected', 'number': 42})
+    return jsonify({'status': 'success', 'message': 'Backend is connected', 'numberv2': 42})
 
 @app.route('/get_folders', methods=['GET'])
 def get_folders():
@@ -151,6 +178,30 @@ def get_coordinates():
         coordinates_data = json.load(f)
 
     return jsonify({'coordinates': coordinates_data['coordinates']})
+
+@app.route('/get_status', methods=['GET'])
+def get_status():
+    folder_name = request.args.get('folder_name')  # Fetch query parameter
+    print("hi")  # Debugging message
+    print(f"Folder name: {folder_name}")  # Debugging the received folder name
+
+    if not folder_name:
+        return jsonify({'error': 'Folder name is required'}), 400
+
+    folder_path = os.path.join(UPLOAD_FOLDER, folder_name)
+    if not os.path.exists(folder_path):
+        return jsonify({'error': 'Folder does not exist'}), 404
+
+    status_filename = os.path.join(folder_path, 'state.txt')
+    if os.path.exists(status_filename):
+        try:
+            with open(status_filename, 'r') as f:
+                status = f.read().strip()
+            return jsonify({'status': status}), 200
+        except Exception as e:
+            return jsonify({'error': 'Error reading status file', 'details': str(e)}), 500
+    else:
+        return jsonify({'error': 'Status file not found'}), 404
 
 
 if __name__ == '__main__':

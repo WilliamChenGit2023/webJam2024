@@ -9,6 +9,7 @@ from pathlib import Path
 import json
 
 def cropandsaveandprocess(img_path, lx, ty, rx, by):
+
     print("&&", lx, ty, rx, by)
     img = cv2.imread(str(img_path))
     grayimg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -26,6 +27,7 @@ def cropandsaveandprocess(img_path, lx, ty, rx, by):
     sum = 0.0
     H = by-ty
     W = rx-lx
+
     for i in range(ty, by):
         for j in range(lx, lx+W//4):
             sum += thresholdedimg[i,j]/(W//4)/(by-ty)
@@ -39,6 +41,7 @@ def cropandsaveandprocess(img_path, lx, ty, rx, by):
         return False
     else:
         return True
+
 
 def main(pfold_str: str, if_new_pos = False):
     pfold = Path(pfold_str)

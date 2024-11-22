@@ -1,1 +1,0 @@
-web: cd flaskBackend && gunicorn app:app
