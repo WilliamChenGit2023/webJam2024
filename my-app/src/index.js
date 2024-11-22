@@ -7,6 +7,7 @@ import App from './App';
 import WebBottom from './WebBottom';
 import ImageUpload from './test';
 import I2 from './test copy';
+import Status from './Webtest copy';
 
 
 const rootElement = document.getElementById('root');
@@ -19,5 +20,6 @@ root.render(
     <ImageUpload />
     <I2 />
     <WebBottom />
+    <Status />
   </React.StrictMode>
 );
