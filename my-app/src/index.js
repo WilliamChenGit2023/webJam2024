@@ -17,7 +17,7 @@ root.render(
   <React.StrictMode>
     <App />
     <WebTab />
-    <WebBottom />
     <Status />
+    <WebBottom />
   </React.StrictMode>
 );
