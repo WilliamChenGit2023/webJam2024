@@ -48,7 +48,7 @@ def uploaded_file(folder_name, filename):
 
 @app.route('/ping', methods=['GET'])
 def ping():
-    return jsonify({'status': 'success', 'message': 'Backend is connected', 'number': 42})
+    return jsonify({'status': 'success', 'message': 'Backend is connected', 'numberv2': 42})
 
 @app.route('/get_folders', methods=['GET'])
 def get_folders():
