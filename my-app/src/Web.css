@@ -12,15 +12,16 @@
     width: 100%
 }
 
-.main-container {
-    padding-top: 100;
+.main-container2 {
+    padding-top: 10;
     display: grid;
     place-content: center;
     gap: 0.8rem;
   }
   
   .button {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     padding: 12px 24px;
     font-size: 16px;
     font-weight: bold;
