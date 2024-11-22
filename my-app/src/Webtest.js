@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Web.css'
 import config from './config';
-import { motion, AnimatePresence } from "framer-motion";
 
 const Webtest = () => {
   const serverAddress = config.serverAddress;
@@ -84,16 +83,11 @@ const Webtest = () => {
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      setIsCameraStarted(true); // Ensure video renders after this line
-      // Attach stream after rendering the video
-      setTimeout(() => {
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
-      }, 0);
+      videoRef.current.srcObject = stream;
+      setIsCameraStarted(true);
     } catch (error) {
-      console.error("Error accessing camera:", error);
-      alert("Camera permission denied or unavailable.");
+      console.error('Error accessing camera:', error);
+      alert('Camera permission denied or unavailable.');
     }
   };
 
@@ -183,19 +177,12 @@ const Webtest = () => {
         <h2>Backend Status</h2>
         <p>{backendStatus ? backendStatus : 'Checking backend...'}</p>
       </div>
-      <div className='main-container'>
-        {!isCameraStarted && (
-          <button className='button' onClick={startCamera}>Start Camera</button>
-        )}
-        {isCameraStarted && (<motion.div
-          initial={{rotate: 180, scale:0}}
-          exit={{rotate:180, scale: 0}}
-          animate={{rotate: 0, scale: 1}}
-          transition={{duration: 1, ease: "backInOut"}}
-        >
-        <video id = "videoScreen" ref={videoRef} autoPlay style={{ display: isCameraStarted ? 'block' : 'none' }} />
-        </motion.div>)}
-      </div>
+      {!isCameraStarted && (
+        <button onClick={startCamera}>Start Camera</button>
+      )}
+      <video id = "videoScreen" ref={videoRef} autoPlay width="320" height="240" style={{ display: isCameraStarted ? 'block' : 'none' }} />
+      <canvas ref={canvasRef} width="320" height="240" style={{ display: 'none' }} />
+
       <div>
         <h2>Recording Folder</h2>
         <select onChange={(e) => setRecordingFolder(e.target.value)} value={recordingFolder}>
