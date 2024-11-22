@@ -31,3 +31,23 @@ Created for [ICSSC](https://studentcouncil.ics.uci.edu/) WebJam 2024 at UCI by W
 
 
 Programmed in Javascript and Python using [React](https://react.dev/) as the Framework
+
+
+## Front-end
+## Washing Machine Status
+Displays the status of every washing machine stored in the backend.
+
+## Laundry Machines
+Allows the user to add/delete washing machines.
+Prompts the user to start recording the washing machines using their camera.
+Allows the user to select between the available washing machines.
+Enables them to add recordings for specified washing machine units.
+
+## Coordinate Selector
+Prompts the user to select the top left and bottom right corners of the recording for computer detection.
+
+## Coordinate Viewer
+Allows the user to view their coordinate selection.
+
+## Backend Status
+Displays the status of the connection to the backend.
