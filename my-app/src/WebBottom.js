@@ -25,6 +25,7 @@ function Credits(){
         <p>
           Programmed in React using Javascript and Python
         </p>
+        <a href="https://www.flaticon.com/free-icons/laundry" title="laundry icons">Laundry icons created by Eucalyp - Flaticon</a>
         <br></br>
       </div>
     )
