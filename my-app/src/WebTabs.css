@@ -1,6 +1,7 @@
 .tab {
     display: flex;
     margin-bottom: 10px;
+    height: auto;
   }
   
   .links {
@@ -19,6 +20,7 @@
   .tabContent {
     display: none;
     padding: 20px;
+    height: 1000px;
     background-color: lightblue;
     border: 1px solid gray;
   }
