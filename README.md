@@ -2,7 +2,7 @@ Here's a polished version of your README:
 
 ---
 
-# Laundry Tracker
+# Washer Vision
 
 A web-based solution for tracking washing machines and identifying the optimal time to do laundry.
 
