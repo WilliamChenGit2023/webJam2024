@@ -4,6 +4,7 @@ import ImageUpload from './test';
 import I2 from './test copy';
 import Webtest from './Webtest';
 import Status from './Webtest copy'
+import FolderStatusTable from "./Webtest copy 2";
 
 
 function WebTab() {
@@ -57,7 +58,7 @@ function WebTab() {
         <div
           id="Content4"
           className={`tabContent ${activeTab === "Content4" ? "active" : ""}`}>
-          <Status />
+          <FolderStatusTable />
         </div>
       </div>
     );

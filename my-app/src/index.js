@@ -18,8 +18,6 @@ root.render(
   <React.StrictMode>
     <App />
     <WebTab />
-    <Status />
-    <FolderStatusTable />
     <WebBottom />
   </React.StrictMode>
 ); 
