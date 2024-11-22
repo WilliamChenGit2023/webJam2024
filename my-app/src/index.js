@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import WebBottom from './WebBottom';
 import WebTab from './WebTabs';
-import DeleteFolder from './test copy 2';
+import UserWebTab from './UserWebTabs';
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
@@ -13,8 +13,8 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <App />
+    <UserWebTab />
     <WebTab />
-    <DeleteFolder />
     <WebBottom />
   </React.StrictMode>
 ); 

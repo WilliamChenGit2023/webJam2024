@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import ImageUpload from './test';
 import I2 from './test copy';
 import Webtest from './Webtest';
-import Status from './Webtest copy'
-import FolderStatusTable from "./Webtest copy 2";
 import CheckBackendStatus from "./BackendStatus";
 
 
@@ -19,6 +17,7 @@ function WebTab() {
   
     return (
       <div>
+        <br></br>
         <div className="tab">
           <button
             className={`links ${activeTab === "Content1" ? "active" : ""}`}
@@ -38,11 +37,6 @@ function WebTab() {
           <button
             className={`links ${activeTab === "Content4" ? "active" : ""}`}
             onClick={() => handleTabClick("Content4")}>
-            Washing Machine Status
-          </button>
-          <button
-            className={`links ${activeTab === "Content5" ? "active" : ""}`}
-            onClick={() => handleTabClick("Content5")}>
             Backend Status
           </button>
         </div>
@@ -64,11 +58,6 @@ function WebTab() {
         <div
           id="Content4"
           className={`tabContent ${activeTab === "Content4" ? "active" : ""}`}>
-          <FolderStatusTable />
-        </div>
-        <div
-          id="Content5"
-          className={`tabContent ${activeTab === "Content5" ? "active" : ""}`}>
           <CheckBackendStatus />
         </div>
       </div>

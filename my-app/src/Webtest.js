@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Web.css'
 import config from './config';
 import { motion, AnimatePresence } from "framer-motion";
+import DeleteFolder from './test copy 2';
 
 const Webtest = () => {
   const serverAddress = config.serverAddress;
@@ -179,6 +180,7 @@ const Webtest = () => {
       <canvas ref={canvasRef} width="640" height="480" style={{ display: 'none' }} />
         </motion.div>)}
       </div>
+      <div className='main-container2'>
       <div>
         <h2>Recording Folder</h2>
         <select onChange={(e) => setRecordingFolder(e.target.value)} value={recordingFolder}>
@@ -193,7 +195,7 @@ const Webtest = () => {
         {isRecording ? 'Stop Recording ' : 'Start Recording '}
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h480q33 0 56.5 23.5T720-720v180l160-160v440L720-420v180q0 33-23.5 56.5T640-160H160Zm0-80h480v-480H160v480Zm0 0v-480 480Z"/></svg>
       </button>
-
+      </div>
       <div>
         <h2>Captured Photos in "{selectedFolder}" Folder</h2>
         <select onChange={handleDisplayFolderChange} value={selectedFolder}>
@@ -217,8 +219,9 @@ const Webtest = () => {
           onChange={(e) => setNewFolderName(e.target.value)} 
           placeholder="Folder Name" 
         />
-        <button onClick={createFolder}>Create Folder</button>
+        <button className='button' onClick={createFolder}>Create Folder</button>
       </div>
+      <DeleteFolder />
     </div>
   );
 };
