@@ -53,16 +53,12 @@ const DeleteFolder = () => {
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1>Delete Folder</h1>
+    <div className='main-container2'>
+      <h2>Delete A Laundry Machine: </h2>
 
       {/* Status message */}
       {status && <p>{status}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      <label htmlFor="folder-select" style={{ fontSize: "18px" }}>
-        Select a folder:
-      </label>
+      {error && <p style={{ color: 'red' }}>{error}</p>} 
       <select
         id="folder-select"
         value={selectedFolder}
@@ -80,14 +76,9 @@ const DeleteFolder = () => {
       {/* Button to delete selected folder */}
       <button
         onClick={handleDeleteFolder}
+        className='button'
         style={{
-          marginTop: '10px',
-          padding: '10px 20px',
           backgroundColor: '#ff6347',
-          color: 'white',
-          border: 'none',
-          borderRadius: '5px',
-          cursor: 'pointer',
         }}
       >
         Delete Folder

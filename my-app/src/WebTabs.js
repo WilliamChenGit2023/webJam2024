@@ -2,7 +2,7 @@ import "./WebTabs.css"
 import React, { useState } from "react";
 import ImageUpload from './test';
 import I2 from './test copy';
-import Webtest from './Webtest';
+import BasicSettings from './BasicSettings';
 import CheckBackendStatus from "./BackendStatus";
 
 
@@ -43,7 +43,7 @@ function WebTab() {
         <div
           id="Content1"
           className={`tabContent ${activeTab === "Content1" ? "active" : ""}`}>
-          <Webtest />
+          <BasicSettings />
         </div>
         <div
           id="Content2"

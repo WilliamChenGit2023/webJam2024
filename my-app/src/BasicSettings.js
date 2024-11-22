@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Web.css'
 import config from './config';
 import { motion, AnimatePresence } from "framer-motion";
-import DeleteFolder from './test copy 2';
+import DeleteFolder from './DeleteFolder';
 
-const Webtest = () => {
+const BasicSettings = () => {
   const serverAddress = config.serverAddress;
   const [photos, setPhotos] = useState([]); // To store photos for display
   const [folders, setFolders] = useState([]); // To store available folders
@@ -164,8 +164,7 @@ const Webtest = () => {
 
   return (
     <div id = "mainBody">
-      <h1>Manual Photo Capture</h1>
-
+      <h1>Manual Add/Delete Laundry Machines</h1>
       <div className='main-container2'>
         {!isCameraStarted && (
           <button className='button' onClick={startCamera}>Start Camera</button>
@@ -182,9 +181,11 @@ const Webtest = () => {
       </div>
       <div className='main-container2'>
       <div>
-        <h2>Recording Folder</h2>
-        <select onChange={(e) => setRecordingFolder(e.target.value)} value={recordingFolder}>
-          <option value="">Select a folder</option>
+        <h2>Select Laundry Machine to Record For: </h2>
+        <select 
+        onChange={(e) => setRecordingFolder(e.target.value)} value={recordingFolder}
+        style={{ marginLeft: "10px", fontSize: "16px", padding: "5px" }}>
+          <option value="">--Select a folder--</option>
           {folders.map((folder, index) => (
             <option key={index} value={folder}>{folder}</option>
           ))}
@@ -197,22 +198,24 @@ const Webtest = () => {
       </button>
       </div>
       <div>
-        <h2>Captured Photos in "{selectedFolder}" Folder</h2>
-        <select onChange={handleDisplayFolderChange} value={selectedFolder}>
-          <option value="">Select a folder</option>
+        <h2> View Stream for Laundry Machine: {selectedFolder} </h2>
+        <select 
+        onChange={handleDisplayFolderChange} value={selectedFolder}
+        style={{ marginLeft: "10px", fontSize: "16px", padding: "5px" }}>
+          <option value="">--Select a folder--</option>
           {folders.map((folder, index) => (
             <option key={index} value={folder}>{folder}</option>
           ))}
         </select>
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div className='main-container2'>
           {photos.map((photo, index) => (
-            <img key={index} src={photo} alt={`Captured ${index}`} style={{ width: '100px', height: 'auto', margin: '5px' }} />
+            <img id = "videoScreen" key={index} src={photo} alt={`Captured ${index}`} style={{ margin: '5px' }} />
           ))}
         </div>
       </div>
 
       <div className='main-container2'>
-        <h2>Create New Folder</h2>
+        <h2>Add New Laundry Machine: </h2>
         <input 
           type="text" 
           value={newFolderName} 
@@ -226,4 +229,4 @@ const Webtest = () => {
   );
 };
 
-export default Webtest;
+export default BasicSettings;
