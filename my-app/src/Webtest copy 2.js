@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import config from './config';
+import './Webtest copy 2.css'
 
 const FolderStatusTable = () => {
   const serverAddress = config.serverAddress;
@@ -55,7 +56,7 @@ const FolderStatusTable = () => {
   }, []);
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
+    <div style={{ padding: "20px", fontFamily: "Georgia (serif)" }}>
       <h1>Folder Status Table</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <table style={{ width: "100%", borderCollapse: "collapse" }}>

@@ -6,8 +6,8 @@ body{
   padding-top: 100;
   display: grid;
   place-content: center;
-  gap: 0.8rem;
-  margin-bottom: 300px;
+  gap: 50px;
+  margin-bottom: 200px;
 }
 
 .button {
@@ -97,4 +97,9 @@ body{
 
 #formatting{
   height: 300px;
+}
+
+.img{
+  align-items: center;
+  justify-content: center;
 }
