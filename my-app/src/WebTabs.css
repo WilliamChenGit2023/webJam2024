@@ -1,0 +1,28 @@
+.tab {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .links {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: lightgray;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .links.active {
+    background-color: blue;
+    color: white;
+  }
+  
+  .tabContent {
+    display: none;
+    padding: 20px;
+    background-color: lightblue;
+    border: 1px solid gray;
+  }
+  
+  .tabContent.active {
+    display: block;
+  }
