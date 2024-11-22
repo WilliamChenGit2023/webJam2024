@@ -1,76 +1,84 @@
-# Purpose
-Created for the purpose of Tracking Washing Machines to return the optimal time to go wash clothes (Definitely not for Webjam).
+Here's a polished version of your README:
 
-## Installation
-First, make sure that [Node.js](https://nodejs.org/en/download/package-manager) is downloaded
+---
 
-Have react be downloaded:
-``` bash
-npm i react
-```
+# Laundry Tracker
 
-Make sure that the directory is choosen to by my-app:
-``` bash
-cd my-app
-```
+A web-based solution for tracking washing machines and identifying the optimal time to do laundry.
 
-Run the file:
-``` bash
-npm start
-```
+---
 
-Have fun with Programming!
+## 📋 **Purpose**
+This project was created to:
+- Minimize waiting times for using washing machines in shared or public laundry facilities.
+- Simplify life for users by providing real-time machine status updates.
+- Potentially serve industries like laundromats to improve service efficiency and customer satisfaction.
 
-## How to Use
-Film the Washing Machine (requires digital text) with another device (phones or tablets) or a the computer webcam. 
-Choose coordinates for which the Washing Machine's digtal clock is located.
-Check the status of the Status on the Washing Machines!!!
+Developed for the **2024 WebJam Event** at **UC Irvine** hosted by [ICSSC](https://studentcouncil.ics.uci.edu/).
 
+---
 
-## Credits 
+## 🚀 **How to Use**
+1. **Capture the Washing Machine Display:**
+   - Use your device's camera (phone, tablet, or computer webcam) to record the washing machine's digital clock.
+2. **Select Coordinates:**
+   - Specify the coordinates of the washing machine’s digital clock display for accurate data processing.
+3. **Monitor Status:**
+   - Check the real-time status of the washing machines!
 
-This website is create for the 2024 Webjam event at UCI hosted by [ICSSC](https://studentcouncil.ics.uci.edu/).
-The main purpose of this website is to reduce wait times for doing laundries in a public setting.
-We hope that this program can be utilized to simiplfy the life of others and can also be used by other industries, such as the Laundromat Industry, to increase their revenue.
+---
 
-Programmed by Will Bao, Cody Chen, William Chen, and Jianan Zhu.
+## 👨‍💻 **Credits**
+Developers:
+- Will Bao  
+- Cody Chen  
+- William Chen  
+- Jianan Zhu  
 
-Programmed in Javascript and Python using React as the framework.
+Technologies:
+- **Frontend:** [React](https://react.dev/)  
+- **Backend:** Python (Flask)  
+- **Image Processing:** OpenCV  
 
+---
 
-Programmed in Javascript and Python using [React](https://react.dev/) as the Framework
+## 🖥️ **Features**
 
+### **Frontend**
+#### **1. Washing Machine Status**
+- Displays real-time statuses of washing machines stored in the backend.
 
-## Front-end
-## Washing Machine Status
-Displays the status of every washing machine stored in the backend.
+#### **2. Laundry Machine Management**
+- Add or delete washing machine entries.
+- Start recordings of washing machines using a camera.
+- Select available washing machines for tracking.
+- Add recordings for specific machine units.
 
-## Laundry Machines
-Allows the user to add/delete washing machines.
-Prompts the user to start recording the washing machines using their camera.
-Allows the user to select between the available washing machines.
-Enables them to add recordings for specified washing machine units.
+#### **3. Coordinate Selector**
+- Allows users to define the top-left and bottom-right corners of the washing machine display for detection.
 
-## Coordinate Selector
-Prompts the user to select the top left and bottom right corners of the recording for computer detection.
+#### **4. Coordinate Viewer**
+- Displays the selected coordinate ranges for review.
 
-## Coordinate Viewer
-Allows the user to view their coordinate selection.
+---
 
-## Backend Status
-Displays the status of the connection to the backend.
-### Algorithm End
+### **Backend**
+#### **1. Status Monitoring**
+- Provides real-time updates on backend connection and machine statuses.
 
-For the algorithm part, we use python opencv2 to process the images stored and detect the content in the washing machine's panel. It will show whether the washing machine is working or not. The files are in ./flaskBackend and ./otherPython.
+#### **2. Image Processing Algorithm**
+- Utilizes Python’s OpenCV library to process images and detect content on the washing machine's panel.
+- Determines if the washing machine is active or idle.
+- Relevant files are located in:
+  - `./flaskBackend/`
+  - `./otherPython/` (for debugging purposes)
 
+#### **3. Flask Server**
+- The backend server (`server.py`) is located in the `./flaskBackend/` directory.
+- Key functionalities:
+  - Handles file uploads and downloads (folders, photos, coordinates, statuses).
+  - Updates washing machine statuses every 2 seconds.
 
-### Backend Server
-The Flask Library in python is located in the folder flaskBackend. The main server file is server.py.
+---
 
-This server handles the interaction between the uploads folder and the frontend react website. 
-It allows users to:
- get/upload folders
- get/upload photos 
- get/upload coordinates 
- get/upload status
- updates status every 2 seconds
+We hope this project makes laundry day easier for everyone! 😊
