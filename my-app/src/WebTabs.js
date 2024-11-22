@@ -22,7 +22,7 @@ function WebTab() {
           <button
             className={`links ${activeTab === "Content1" ? "active" : ""}`}
             onClick={() => handleTabClick("Content1")}>
-            Manual Photo Capture
+            Laundry Machines
           </button>
           <button
             className={`links ${activeTab === "Content2" ? "active" : ""}`}

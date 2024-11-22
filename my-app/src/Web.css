@@ -51,3 +51,14 @@
     border: none;
     border-radius: 12px;
   }
+
+  .textbox {
+    width: 90%;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    outline: none;
+  }
