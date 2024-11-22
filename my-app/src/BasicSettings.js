@@ -218,6 +218,7 @@ const BasicSettings = () => {
         <h2>Add New Laundry Machine: </h2>
         <input 
           type="text" 
+          className='textbox'
           value={newFolderName} 
           onChange={(e) => setNewFolderName(e.target.value)} 
           placeholder="Choose Laundry Machine Name" 
