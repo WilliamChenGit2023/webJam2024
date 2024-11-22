@@ -3,7 +3,7 @@ import axios from 'axios';
 import "./Web.css";
 import config from './config';
 
-const ImageUpload = () => {
+const CoordinateSelect = () => {
   const serverAddress = config.serverAddress
   const [folders, setFolders] = useState([]); 
   const [selectedFolder, setSelectedFolder] = useState('');
@@ -125,38 +125,54 @@ const ImageUpload = () => {
   };
 
   return (
-    <div>
-      <h1>Select Folder and Image, then Click Two Points</h1>
-      <select onChange={handleFolderChange} value={selectedFolder}>
-        <option value="">Select Folder</option>
+    <div id="mainBody" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div className='main-container2'>
+        <h1>Select Washing Machine to Upload Coordinates</h1>
+      </div>
+      <select 
+        onChange={handleFolderChange} 
+        value={selectedFolder}
+        style={{ marginLeft: "10px", fontSize: "16px", padding: "5px" , width: "65%"}}
+      >
+        <option value="">--Select Laundry Machine--</option>
         {folders.map((folder, index) => (
           <option key={index} value={folder}>{folder}</option>
         ))}
       </select>
-
+  
       {image && (
-        <div style={{ position: 'relative' }}>
-          <img
-            ref={imageRef}
-            src={serverAddress+`${image}`}
-            alt="Uploaded"
-            onClick={handleImageClick}
-            style={{ cursor: 'crosshair', maxWidth: '640' , maxHeight: '480' }}
-          />
-          <canvas
-            ref={canvasRef}
-            width="640"
-            height="480"
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              pointerEvents: 'none',
-            }}
-          />
+        <div 
+          style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            marginTop: '20px' // Added space between elements
+          }}
+        >
+          <div style={{ position: 'relative' }}>
+            <img
+              ref={imageRef}
+              src={serverAddress + `${image}`}
+              alt="Uploaded"
+              onClick={handleImageClick}
+              style={{ cursor: 'crosshair', maxWidth: '640px', maxHeight: '480px' }}
+            />
+            <canvas
+              ref={canvasRef}
+              width="640"
+              height="480"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                pointerEvents: 'none',
+              }}
+            />
+          </div>
         </div>
       )}
-
+  
       <div>
         <p>Selected Coordinates:</p>
         <ul>
@@ -167,10 +183,12 @@ const ImageUpload = () => {
           ))}
         </ul>
       </div>
-
-      <button onClick={handleSubmit}>Submit Coordinates</button>
+  
+      <button className="button" onClick={handleSubmit}>Submit Coordinates</button>
     </div>
   );
+  
+  
 };
 
-export default ImageUpload;
+export default CoordinateSelect;

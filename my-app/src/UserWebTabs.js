@@ -1,6 +1,6 @@
 import "./WebTabs.css"
 import React, { useState } from "react";
-import FolderStatusTable from "./Webtest copy 2";
+import FolderStatusTable from "./StatusTable";
 
 
 function UserWebTab() {

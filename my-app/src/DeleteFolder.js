@@ -65,7 +65,7 @@ const DeleteFolder = () => {
         onChange={handleFolderChange}
         style={{ marginLeft: "10px", fontSize: "16px", padding: "5px" }}
       >
-        <option value="">--Select Folder--</option>
+        <option value="">--Select Laundry Machine--</option>
         {folders.map((folder) => (
           <option key={folder} value={folder}>
             {folder}
