@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import config from './config';
-import './Webtest copy 2.css'
+import config from "./config";
+import "./Webtest copy 2.css";
 
 const FolderStatusTable = () => {
   const serverAddress = config.serverAddress;
@@ -24,7 +24,7 @@ const FolderStatusTable = () => {
               folderName,
               status: statusResponse.data.status === "true" ? "true" : "false",
             }))
-            .catch((err) => ({
+            .catch(() => ({
               folderName,
               status: "error",
             }))
@@ -36,51 +36,79 @@ const FolderStatusTable = () => {
             setFolders(folderStatusData);
             setError(""); // Clear any previous errors
           })
-          .catch((err) => {
-            console.error(err);
+          .catch(() => {
             setError("Failed to fetch folder statuses.");
           });
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
         setError("Failed to fetch folders.");
       });
   };
 
   useEffect(() => {
     fetchFolderStatuses(); // Initial fetch
-    const intervalId = setInterval(fetchFolderStatuses, 30000); // Refresh every 30 seconds
+    const intervalId = setInterval(fetchFolderStatuses, 2000); // Refresh every 30 seconds
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, []);
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Georgia (serif)" }}>
-      <h1>Folder Status Table</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+    <div id = "mainBody">
+      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+        Laundry Machine Status Table
+      </h1>
+      {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
+      <table
+        style={{
+          width: "100%",
+          borderCollapse: "collapse",
+          margin: "0 auto",
+          fontSize: "16px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        }}
+      >
         <thead>
-          <tr>
-            <th style={{ padding: "8px", border: "1px solid #ddd" }}>Folder Name</th>
-            <th style={{ padding: "8px", border: "1px solid #ddd" }}>Status</th>
+          <tr style={{ backgroundColor: "#f4f4f4", textAlign: "left" }}>
+            <th style={{ padding: "10px", border: "1px solid #ddd" }}>
+              Machine Name
+            </th>
+            <th style={{ padding: "10px", border: "1px solid #ddd" }}>
+              Status
+            </th>
           </tr>
         </thead>
         <tbody>
-          {folders.map((folder) => (
-            <tr key={folder.folderName}>
-              <td style={{ padding: "8px", border: "1px solid #ddd" }}>
+          {folders.map((folder, index) => (
+            <tr
+              key={folder.folderName}
+              style={{
+                backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#ffffff",
+              }}
+            >
+              <td style={{ padding: "10px", border: "1px solid #ddd" }}>
                 {folder.folderName}
               </td>
               <td
                 style={{
-                  padding: "8px",
+                  padding: "10px",
                   border: "1px solid #ddd",
-                  backgroundColor: folder.status === "true" ? "green" : folder.status === "false" ? "red" : "gray",
+                  textAlign: "center",
+                  backgroundColor:
+                    folder.status === "true"
+                      ? "#4caf50"
+                      : folder.status === "false"
+                      ? "#f44336"
+                      : "#9e9e9e",
                   color: "white",
+                  fontWeight: "bold",
                 }}
               >
-                {folder.status === "true" ? "✅ True" : folder.status === "false" ? "❌ False" : "Error"}
+                {folder.status === "true"
+                  ? "Laundry Machine Available"
+                  : folder.status === "false"
+                  ? "Laundry Machine In Use"
+                  : "Error"}
               </td>
             </tr>
           ))}

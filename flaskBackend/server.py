@@ -34,7 +34,7 @@ def update_status_periodically():
                     f.write('true' if status else 'false')
             except Exception as e:
                 print(f"Error updating status for folder {folder_name}: {e}")
-        time.sleep(30)  # Update every 30 seconds
+        time.sleep(5)  # Update every 30 seconds
 
 # Start the status update thread
 status_thread = threading.Thread(target=update_status_periodically, daemon=True)

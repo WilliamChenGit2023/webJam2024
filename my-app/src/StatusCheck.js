@@ -29,12 +29,13 @@ const ImageUploadAndStatus = () => {
         setError("Failed to fetch folders.");
       });
 
-    // Set up interval to refresh status every 30 seconds
+    // Set up interval to refresh status and image every 2 seconds
     const intervalId = setInterval(() => {
       if (selectedFolder) {
         fetchStatus(selectedFolder);
+        fetchImagesFromFolder(selectedFolder);
       }
-    }, 30000); // Refresh every 30 seconds
+    }, 2000); // Refresh every 2 seconds
 
     return () => clearInterval(intervalId); // Clean up interval on component unmount
   }, [selectedFolder]);
@@ -54,6 +55,7 @@ const ImageUploadAndStatus = () => {
       } else {
         setImage(null);
         setCoordinates(null);
+        clearCanvas(); // Clear the canvas when no images are found
       }
     } catch (error) {
       console.error('Error fetching images:', error);
@@ -71,6 +73,7 @@ const ImageUploadAndStatus = () => {
     } catch (error) {
       console.error('Error fetching coordinates:', error);
       setCoordinates(null);
+      clearCanvas(); // Clear the canvas if coordinates fetch fails
     }
   };
 
@@ -91,6 +94,16 @@ const ImageUploadAndStatus = () => {
       });
   };
 
+  const clearCanvas = () => {
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+      const context = canvas.getContext('2d');
+      canvas.width = 640; // Ensure canvas size remains consistent
+      canvas.height = 480;
+      context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+    }
+  };
+
   const drawRectangle = () => {
     if (coordinates && coordinates.length === 2 && imageRef.current && canvasRef.current) {
       const canvas = canvasRef.current;
@@ -100,7 +113,7 @@ const ImageUploadAndStatus = () => {
       canvas.width = 640;
       canvas.height = 480;
 
-      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.clearRect(0, 0, canvas.width, canvas.height); // Clear existing drawings
 
       const [point1, point2] = coordinates;
       const x = Math.min(point1.x, point2.x);
@@ -113,6 +126,8 @@ const ImageUploadAndStatus = () => {
       context.lineWidth = 2;
       context.strokeStyle = 'blue';
       context.stroke();
+    } else {
+      clearCanvas(); // Clear the canvas if no valid coordinates are present
     }
   };
 
@@ -123,19 +138,21 @@ const ImageUploadAndStatus = () => {
   const handleFolderChange = (e) => {
     const folder = e.target.value;
     setSelectedFolder(folder);
+    setImage(null);
+    setCoordinates(null); // Reset image and coordinates when switching folders
+    clearCanvas(); // Clear the canvas on folder change
     fetchStatus(folder); // Fetch status whenever folder changes
     if (folder) {
       fetchImagesFromFolder(folder);
-    } else {
-      setImage(null);
-      setCoordinates(null);
     }
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1>Folder Status and Image Upload</h1>
-
+    <div id="mainBody">
+      <div className='main-container2'>
+        <h1>Folder Status and Image Upload</h1>
+      </div>
+  
       <label htmlFor="folder-select" style={{ fontSize: "18px" }}>
         Select a folder:
       </label>
@@ -154,49 +171,58 @@ const ImageUploadAndStatus = () => {
           </option>
         ))}
       </select>
-
+  
       {selectedFolder && (
         <div style={{ marginTop: "20px", fontSize: "18px" }}>
           <p><strong>Selected Folder:</strong> {selectedFolder}</p>
           {status && (
-            <p><strong>Status:</strong> {status === "true" ? "✅ True" : "❌ False"}</p>
+            <p><strong>Status:</strong> {status === "true" ? "✅ Washing Machine Available!" : "❌ Washing Machine Unavailable :("}</p>
           )}
           {error && <p style={{ color: "red" }}><strong>Error:</strong> {error}</p>}
         </div>
       )}
-
+  
       {image && (
-        <div style={{ position: 'relative', width: '640px', height: '480px' }}>
-          <img
-            ref={imageRef}
-            src={serverAddress + `${image}`}
-            alt="Uploaded"
-            style={{ width: '640px', height: '480px', display: 'block' }}
-          />
-          <canvas
-            ref={canvasRef}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '640px',
-              height: '480px',
-              pointerEvents: 'none',
-            }}
-          />
+        <div 
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginTop: '20px'
+          }}
+        >
+          <div style={{ position: 'relative', width: '640px', height: '480px' }}>
+            <img
+              ref={imageRef}
+              src={serverAddress + `${image}`}
+              alt="Uploaded"
+              style={{ width: '640px', height: '480px', display: 'block' }}
+            />
+            <canvas
+              ref={canvasRef}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '640px',
+                height: '480px',
+                pointerEvents: 'none',
+              }}
+            />
+          </div>
         </div>
       )}
-
+  
       {coordinates ? (
-        <div>
+        <div style={{ marginTop: '20px' }}>
           <h3>Coordinates:</h3>
           <ul>
-            {coordinates.map((coord, index) => (
-              <li key={index}>
-                Point {index + 1}: (X: {coord.x}, Y: {coord.y})
-              </li>
-            ))}
-          </ul>
+          {coordinates.map((coord, index) => (
+            <li key={index}>
+              Point {index + 1}: ({coord.x}, {coord.y})
+            </li>
+          ))}
+        </ul>
         </div>
       ) : (
         image && <p>No coordinates found for this image.</p>
