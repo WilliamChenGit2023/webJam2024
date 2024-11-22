@@ -69,15 +69,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-## Python Flask Backend
 
-The Flask Library in python is located in the folder flaskBackend. The main server file is server.py.
-
-This server handles the interaction between the uploads folder and the frontend react website. 
-It allows users to:
- get/upload folders
- get/upload photos 
- get/upload coordinates 
- get/upload status
- updates status every 2 seconds
 

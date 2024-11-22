@@ -36,3 +36,15 @@ Programmed in Javascript and Python using [React](https://react.dev/) as the Fra
 ### Algorithm End
 
 For the algorithm part, we use python opencv2 to process the images stored and detect the content in the washing machine's panel. It will show whether the washing machine is working or not. The files are in ./flaskBackend and ./otherPython.
+
+
+### Backend Server
+The Flask Library in python is located in the folder flaskBackend. The main server file is server.py.
+
+This server handles the interaction between the uploads folder and the frontend react website. 
+It allows users to:
+ get/upload folders
+ get/upload photos 
+ get/upload coordinates 
+ get/upload status
+ updates status every 2 seconds
