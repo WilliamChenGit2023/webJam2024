@@ -1,5 +1,3 @@
-Here's a polished version of your README:
-
 ---
 
 # Washer Vision
